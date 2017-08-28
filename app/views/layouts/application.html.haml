@@ -1,0 +1,21 @@
+!!!
+%html(lang="hu")
+  %head
+    %meta(charset="utf-8")
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1")
+    %title LOFASZ
+    = stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+    = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.css'
+    = csrf_meta_tag
+  %body
+    -# TODO create helpers for these awful things. fa_icon, navbar_item_link_to, etc.
+    %nav.navbar
+      .navbar-brand
+        = link_to image_tag('dhtv_logo.png'), root_url, class: 'navbar-item'
+      .navbar-start
+        = link_to((content_tag(:i, '', class: 'fa fa-world') + ' Portál').html_safe, 'http://dragonhall.hu/', class: 'navbar-item')
+        = link_to((content_tag(:i, '', class: 'fa fa-film') + ' Videótár').html_safe, recordings_url, class: 'navbar-item')
+        = link_to((content_tag(:i, '', class: 'fa fa-television') + ' TV').html_safe, root_url, class: 'navbar-item')
+      .navbar-end
+        = link_to content_tag(:span, content_tag(:i, '', class: 'fa fa-facebook'), class: 'icon', style: 'color: #3b5998'), 'https://www.facebook.com/dragonhall.hu', class: 'navbar-item'
