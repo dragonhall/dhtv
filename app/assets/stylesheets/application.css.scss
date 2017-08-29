@@ -1,0 +1,10 @@
+//= require font-awesome
+//= require bulma
+//= require_tree .
+//= require_self
+
+.navbar-item {
+  .icon {
+    padding-right: 5px;
+  }
+}
