@@ -22,7 +22,7 @@
             -#= link_to((content_tag(:i, '', class: 'fa fa-world') + ' Portál').html_safe, 'http://dragonhall.hu/', class: 'navbar-item')
             -#= link_to((content_tag(:i, '', class: 'fa fa-film') + ' Videótár').html_safe, recordings_url, class: 'navbar-item')
             -#= link_to((content_tag(:i, '', class: 'fa fa-television') + ' TV').html_safe, root_url, class: 'navbar-item')
-            = navbar_item_link_to faw_icon('world', text: 'Portál'), 'http://dragonhall.hu/'
+            = navbar_item_link_to faw_icon('globe', text: 'Portál'), 'http://dragonhall.hu/'
             = navbar_item_link_to faw_icon('film', text: 'Videótár'), recordings_url
             = navbar_item_link_to faw_icon('television', text: 'TV'), root_url
           .navbar-end

@@ -1,9 +1,11 @@
-%section#tv.hero.is-medium.has-text-centered
-  .hero-body
-    .container
+-#%section#tv.hero.is-medium.has-text-centered
+%section#tv.is-medium.has-text-centered
+  -#.hero-body
+  .container
+    .box
       %h1.title Lejátszó
-    .box.has-text-centered
-      %figure.image
-        = image_tag 'http://via.placeholder.com/720x404?text=FlowPlayer', alt: 'FlowPlayer', size: '720x404', style: 'width: auto'
-  -#%div#adsense
-  -#  = image_tag 'http://via.placeholder.com/720x40?text=AdSense', alt: 'AdSense', size: '720x40'
+      %figure#moneyback
+        = image_tag 'http://via.placeholder.com/720x90?text=Google%20Rekláma', alt: 'Moneyback', size: '720x90'
+      %figure#player.has-text-centered
+        = image_tag 'http://via.placeholder.com/720x404?text=FlowPlayer', alt: 'FlowPlayer', size: '720x404'
+        %figcaption.notification.is-hidden-mobile.is-info(style="width: 720px; margin: 0 auto;") Az adás frissen tartásához nyomj egy "F5"-öt!

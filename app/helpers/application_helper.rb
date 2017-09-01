@@ -10,6 +10,18 @@ module ApplicationHelper
       html_options[:class] = 'navbar-item'
     end
 
+    active = false
+
+    if url.is_a?(String) and (url == request.url || url == request.path)
+      STDERR.puts "String match! (#{url} == #{request.url} || #{url} == #{request.url})"
+      active = true
+    elsif url_for(url) == request.url
+      STDERR.puts "url_for match! (url_for(#{url}) == #{request.url})"
+      active = true
+    end
+
+    html_options[:class] << ' is-active' if active
+
     link_to body, url, html_options
   end
 

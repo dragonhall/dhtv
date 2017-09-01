@@ -6,8 +6,8 @@ class Channel < ApplicationRecord
   has_many :recordings
 
 
-  mount_uploader :icon, ChannelImageUploader
-  mount_uploader :logo, ChannelImageUploader
+  # mount_uploader :icon, ChannelImageUploader
+  # mount_uploader :logo, ChannelImageUploader
 
   validates_presence_of :name
   validates_uniqueness_of :name
