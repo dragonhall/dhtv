@@ -1,6 +1,10 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
+def port_base
+  ENV['RAILS_ENV'] == 'staging' ? 9000 : 3000
+end
+
 ## Uncomment and set this to only include directories you want to watch
 # directories %w(app lib config test spec features) \
 #  .select{|d| Dir.exists?(d) ? d : UI.warning("Directory #{d} does not exist")}
@@ -43,7 +47,7 @@ end
 # zeus: false                          # enables zeus gem.
 # CLI: 'rails server'                  # customizes runner command. Omits all options except `pid_file`!
 
-guard 'rails', server: 'puma', port: 3001 do
+guard 'rails', server: 'puma', port: port_base + 1, environment: (ENV['RAILS_ENV'] || 'development') do
   watch('Gemfile.lock')
   watch(%r{^(config|lib)/.*})
 end
