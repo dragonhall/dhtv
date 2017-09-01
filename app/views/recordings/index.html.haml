@@ -1,4 +1,4 @@
-%section#recordings.container.section
+%section#recordings.box.container.section
   #gallery-nav.columns.section
     .column.is-8
       .title
@@ -34,6 +34,14 @@
                         %a.tag.is-danger.icon.is-small= fa_icon('heart')
                         .tag.is-small.is-info= 303
                     .control
+                      .length.tags.has-addons
+                        .tag.is-black.icon.is-small= fa_icon('clock-o')
+                        .tag.is-small.is-info= Time.at(1405).strftime('%H:%M')
+                    .control
+                      .pegi.tags.has-addons
+                        .tag.is-info.icon.is-small= fa_icon('circle-o')
+                        .tag.is-warning= '12+'
+                    .control
                       .plays.tags.has-addons
                         %a.tag.is-success.icon.is-small= fa_icon('play')
-                        .tag.is-small.is-info= 303
+                        .tag.is-small.is-info= 4500
