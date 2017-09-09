@@ -33,4 +33,12 @@ module ApplicationHelper
     (content_tag(:span, fa_icon(icon), options) +
         (text.blank? ? '' : content_tag(:span, text, text_options))).html_safe
   end
+
+  def time_display(seconds)
+    if seconds > 3599
+      Time.at(seconds).utc.strftime('%T')
+    else
+      Time.at(seconds).utc.strftime('%M:%S')
+    end
+  end
 end

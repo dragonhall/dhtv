@@ -4,9 +4,21 @@
     %meta(charset="utf-8")
     %meta(http-equiv="Content-Type" content="text/html; charset=utf8")
     %meta(name="viewport" content="width=device-width, initial-scale=1")
-    %title LOFASZ
+    %title
+      = content_for?(:title) ? "#{content_for(:title)} - " : ''
+      DragonHall+ TV
     = stylesheet_link_tag :application
+    = javascript_include_tag :application
     = csrf_meta_tags
+    :coffeescript
+      if(typeof(window.flowplayer) == 'undefined')
+        window.flowplayer = {}
+
+      flowplayer.conf = {
+        live: !/recording/.test(window.location.pathname)
+        swf: "#{asset_path('flowplayer.swf')}"
+      }
+
   %body
     -# TODO create helpers for these awful things. fa_icon, navbar_item_link_to, etc.
     %nav.navbar

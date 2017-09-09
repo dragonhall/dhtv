@@ -50,15 +50,27 @@ class Video < ApplicationRecord
     @pegi_rating_titles = Hash[v]
   end
 
+  def pegi_rating_i
+    pegi_rating.to_s.sub(/^pegi_/, '').to_i
+  end
+
+  def pegi_rating_s
+    pegi_rating.to_s.sub(/^pegi_/, '') + '+'
+  end
+
+  def pegi_icon
+    Video.pegi_icons
+  end
 
   # @return [Hash]
   def self.pegi_icons
-    return @pegi_icons unless !defined?(@pegi_icons) || @pegi_icons.empty?
-    # v = Video.pegi_rating_titles.keys.each_with_index do |r, i|
-    #   ["http://www.pegi.info/en/index/id/33/media/img/32#{i}.gif", r]
-    # end
+    # return @pegi_icons unless !defined?(@pegi_icons) || @pegi_icons.empty?
+    v = Array.new
+    Video.pegi_rating_titles.keys.each_with_index do |r, i|
+      v << [r.sub('+', '').to_i, "/pegi_rating/#{r.sub('+', '')}.png"]
+    end
 
-    @pegi_icons = Hash[v]
+    Hash[v]
   end
 
   # @return [Array]
