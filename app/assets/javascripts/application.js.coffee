@@ -32,15 +32,36 @@ jQuery ->
     player.find('source').attr(src: $(this).attr('href'))
 
     $('#player_modal .modal-content').append(player)
-    $('.player').flowplayer()
+    $('#player_modal .player').flowplayer()
     $('#player_modal').addClass('is-active').show()
 
-  if($(document).has('#tv-player'))
+  if($(document).has('#tv_player'))
     jQuery.ajax
       url: '/tv/index.json'
       method: 'GET'
       success: (data, status, xhr) ->
+        alert(data.status)
+        if data.status == 200
+          player = $('<div class="player" data-debug="true" data-engine="flash"><video width="720" height="404"><source type="video/flash"/></video></div>')
+          player.find('source').attr(src: data.src)
+          $('#tv_player').append(player)
+          $('#tv_player .player').flowplayer()
+        else if data.status == 404
+          player = $("<img src='#{data.src}' width='720' height='404' />")
+          $('#tv_player').append(player)
 
-        player = $('<div class="player" data-debug="true" data-engine="flash"><video width="720" height="404"><source type="video/flash"/></video></div>')
-        player.find('source').attr(src: data.)
+  $('#tabTV').on 'click', (e) ->
+    e.preventDefault()
+    $('#program').hide()
+    $('#player').show()
+    $('#tabProgram').parent().removeClass('is-active')
+    $('#tabTV').parent().addClass('is-active')
+
+  $('#tabProgram').on 'click', (e) ->
+    e.preventDefault()
+    $('#program').show()
+    $('#player').hide()
+    $('#tabTV').parent().removeClass('is-active')
+    $('#tabProgram').parent().addClass('is-active')
+
 

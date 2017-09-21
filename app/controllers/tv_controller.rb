@@ -5,9 +5,9 @@ class TvController < ApplicationController
       format.json do
         if Channel.where(domain: request.host).any? and Channel.where(domain: request.host).first.playlists.active.any?
           @channel = Channel.where(domain: request.host).first
-          render :json, {src: "rtmp://tv.dragonhall.hu:1935/live/#{@channel.stream_path}"}
+          render json: {status: 200, src: "rtmp://tv.dragonhall.hu:1935/live/#{@channel.stream_path}"}
         else
-          render :json, {status: '404', error: 'No active playlist found'}, status: :not_found
+          render json: {status: 404, src: ActionController::Base.helpers.asset_path('monoscope.png')}
         end
       end
     end
