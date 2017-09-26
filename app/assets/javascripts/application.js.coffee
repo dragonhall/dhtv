@@ -80,9 +80,9 @@ jQuery ->
 
   $('#tabProgram').on 'click', (e) ->
     e.preventDefault()
-    $('#program').show()
-    $('#player').hide()
-    $('#tabTV').parent().removeClass('is-active')
-    $('#tabProgram').parent().addClass('is-active')
+#    $('#program').show()
+#    $('#player').hide()
+#    $('#tabTV').parent().removeClass('is-active')
+#    $('#tabProgram').parent().addClass('is-active')
 
 
