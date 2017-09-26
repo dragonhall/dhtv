@@ -1,15 +1,24 @@
 class TvController < ApplicationController
+  respond_to :html, :json
+
   def index
+    @channel = Channel.where(domain: request.host).first
+    @playlist = @channel.playlists.active.any? ? @channel.playlists.active.first : nil
     respond_to do |format|
       format.html
       format.json do
-        if Channel.where(domain: request.host).any? and Channel.where(domain: request.host).first.playlists.active.any?
-          @channel = Channel.where(domain: request.host).first
-          render json: {status: 200, src: "rtmp://tv.dragonhall.hu:1935/live/#{@channel.stream_path}"}
+        if @playlist
+          render json: { online: true, content: render_to_string(partial: 'player.html') }
         else
-          render json: {status: 404, src: ActionController::Base.helpers.asset_path('monoscope.png')}
+          render json: { online: false, content: render_to_string(partial: 'monoscope.html') }
         end
       end
     end
   end
 end
+
+
+###
+# - if @playlist
+#          .
+#     - else

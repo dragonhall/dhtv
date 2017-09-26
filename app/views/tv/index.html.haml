@@ -8,8 +8,12 @@
             = link_to faw_icon('television', text: 'Lejátszó'), '#', id: 'tabTV'
           %li
             = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram'
-      #player.container.is-centered(style="width: 70%; margin: 0 auto")
-        #tv_player
+      #player.container.is-centered(style="width: 70%; margin-top: 20px; text-align: center;")
+        - if @playlist
+          = render partial: 'player'
+        - else
+          = render partial: 'monoscope'
 
-      #program.container.is-centered(style="width: 70%; margin: 0 auto; display: none")
+
+      #program.container(style="width: 70%; margin-top: 20px; display: none; text-align: center;")
         = image_tag 'http://via.placeholder.com/720x404?text=Program', size: '720x404'

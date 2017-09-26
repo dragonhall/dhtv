@@ -1,0 +1,3 @@
+.player{data: { debug: 'true', engine: 'flash', swf: asset_path('flowplayer.swf')}}
+  %video(autoplay=true)
+    %source{type: 'video/flash', src: "rtmp://tv.dragonhall.hu:1935/live/#{@playlist.channel.stream_path}"}

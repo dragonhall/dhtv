@@ -15,6 +15,28 @@
 #= require rails-ujs
 #= require_tree .
 
+window.pollTV = ($) ->
+  $.ajax
+    url: '/tv/index.json'
+    method: 'GET'
+    success: (data, status, xhr) ->
+#      console.log(data.online)
+#      console.log(data.content)
+      player = $(data.content)
+
+      console.log(player.has('.player')[0] != undefined )
+      console.log($('#player .player').length == 0)
+
+
+      if(player.has('.player') and $('#player .player').length == 0)
+        $('#player').empty()
+        $('#player').append(player)
+
+      $('#player .player').flowplayer()
+
+  window.setTimeout(pollTV, 3000, $)
+
+
 jQuery ->
 
   $('#player_modal .modal-close').on 'click', (e) ->
@@ -35,20 +57,19 @@ jQuery ->
     $('#player_modal .player').flowplayer()
     $('#player_modal').addClass('is-active').show()
 
-  if($(document).has('#tv_player'))
-    jQuery.ajax
-      url: '/tv/index.json'
-      method: 'GET'
-      success: (data, status, xhr) ->
-        alert(data.status)
-        if data.status == 200
-          player = $('<div class="player" data-debug="true" data-engine="flash"><video width="720" height="404"><source type="video/flash"/></video></div>')
-          player.find('source').attr(src: data.src)
-          $('#tv_player').append(player)
-          $('#tv_player .player').flowplayer()
-        else if data.status == 404
-          player = $("<img src='#{data.src}' width='720' height='404' />")
-          $('#tv_player').append(player)
+  if($(document).has('#player'))
+    window.pollTV(jQuery)
+
+
+  #        alert(data.status)
+#        if data.status == 200
+#          player = $('<div class="player" data-debug="true" data-engine="flash"><video width="720" height="404"><source type="video/flash"/></video></div>')
+#          player.find('source').attr(src: data.src)
+#          $('#player').append(player)
+#          $('#player .player').flowplayer()
+#        else if data.status == 404
+#          player = $("<img src='#{data.src}' width='720' height='404' />")
+#          $('#player').append(player)
 
   $('#tabTV').on 'click', (e) ->
     e.preventDefault()
