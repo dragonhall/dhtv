@@ -32,7 +32,9 @@ window.pollTV = ($) ->
         $('#player').empty()
         $('#player').append(player)
 
-      $('#player .player').flowplayer()
+      if($('#player .player > video').length > 0)
+        console.log('Installing Flowplayer')
+        $('#player .player').flowplayer()
 
   window.setTimeout(pollTV, 3000, $)
 
