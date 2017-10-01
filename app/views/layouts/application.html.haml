@@ -4,18 +4,39 @@
     %meta(charset="utf-8")
     %meta(http-equiv="Content-Type" content="text/html; charset=utf8")
     %meta(name="viewport" content="width=device-width, initial-scale=1")
-    %title LOFASZ
-    = stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
-    = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.css'
-    = csrf_meta_tag
+    %title
+      = content_for?(:title) ? "#{content_for(:title)} - " : ''
+      DragonHall+ TV
+    = stylesheet_link_tag :application
+    = javascript_include_tag :application
+    = csrf_meta_tags
+    :coffeescript
+      if(typeof(window.flowplayer) == 'undefined')
+        window.flowplayer = {}
+
+      flowplayer.conf = {
+        live: !/recording/.test(window.location.pathname)
+        swf: "#{asset_path('flowplayer.swf')}"
+      }
+
   %body
     -# TODO create helpers for these awful things. fa_icon, navbar_item_link_to, etc.
     %nav.navbar
-      .navbar-brand
-        = link_to image_tag('dhtv_logo.png'), root_url, class: 'navbar-item'
-      .navbar-start
-        = link_to((content_tag(:i, '', class: 'fa fa-world') + ' Portál').html_safe, 'http://dragonhall.hu/', class: 'navbar-item')
-        = link_to((content_tag(:i, '', class: 'fa fa-film') + ' Videótár').html_safe, recordings_url, class: 'navbar-item')
-        = link_to((content_tag(:i, '', class: 'fa fa-television') + ' TV').html_safe, root_url, class: 'navbar-item')
-      .navbar-end
-        = link_to content_tag(:span, content_tag(:i, '', class: 'fa fa-facebook'), class: 'icon', style: 'color: #3b5998'), 'https://www.facebook.com/dragonhall.hu', class: 'navbar-item'
+      .container
+        .navbar-brand
+          = link_to (image_tag('dhtv_logo.png') + ' DragonHall+ TV'), root_url, class: 'navbar-item'
+          .navbar-burger.burger(data-target="navMainMenu")
+            %span
+            %span
+            %span
+        #navMainMenu.navbar-menu
+          .navbar-start
+            -#= link_to((content_tag(:i, '', class: 'fa fa-world') + ' Portál').html_safe, 'http://dragonhall.hu/', class: 'navbar-item')
+            -#= link_to((content_tag(:i, '', class: 'fa fa-film') + ' Videótár').html_safe, recordings_url, class: 'navbar-item')
+            -#= link_to((content_tag(:i, '', class: 'fa fa-television') + ' TV').html_safe, root_url, class: 'navbar-item')
+            = navbar_item_link_to faw_icon('globe', text: 'Portál'), 'http://dragonhall.hu/'
+            = navbar_item_link_to faw_icon('film', text: 'Videótár'), recordings_url
+            = navbar_item_link_to faw_icon('television', text: 'TV'), root_url
+          .navbar-end
+            = navbar_item_link_to content_tag(:span, faw_icon('facebook'), class: 'icon', style: 'color: #3b5998'), 'https://www.facebook.com/dragonhall.hu'
+    = yield

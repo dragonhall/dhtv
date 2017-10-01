@@ -1,0 +1,57 @@
+- content_for(:title, 'Videótár')
+%section#recordings.box.container.section
+  #gallery-nav.columns.section
+    .column.is-8
+      .title
+        = content_tag(:span, fa_icon('film'), class: 'icon is-medium')
+        %span.is-uppercase.has-font-discognatehacka Videótár
+
+  - (@recordings.count / 3).times do |i|
+    .columns
+      - (0..2).each do |j|
+        - recording = @recordings[i * 3 + j]
+        .column.is-4
+          .card
+            %header.card-header
+              %p.card-header-title
+                -#= image_tag 'http://via.placeholder.com/36x36', class: 'avatar'
+                = image_tag Video.pegi_icons[recording.video.pegi_rating_i], class: 'avatar'
+                = recording.video.title
+              %span.card-header-icon.timestamp
+                = time_ago_in_words recording.created_at
+            .card-image
+              %figure.image.is-16by9
+                = image_tag(sprintf('/screenshots/video_%03d.png', recording.video_id), alt: 'WataMote 1.', class: 'gallery-image')
+                -#.gallery-text
+                -#  %h3.icon.is-medium= fa_icon 'play'
+                = link_to faw_icon('play', class: 'is-medium'), recording.path, class: 'gallery-text'
+            -#.card-content
+
+            -#  .panel.has-text-right
+            -#    .panel-block
+            -#      .field.is-grouped.is-grouped-multiline
+            -#        .control
+            -#          .likes.tags.has-addons
+            -#            %a.tag.is-danger.icon.is-small= fa_icon('heart')
+            -#            .tag.is-small.is-info= 303
+            -#        .control
+            -#          .length.tags.has-addons
+            -#            .tag.is-black.icon.is-small= fa_icon('clock-o')
+            -#            .tag.is-small.is-info= time_display recording.video.length
+            -#        .control
+            -#          .pegi.tags.has-addons
+            -#            .tag.is-info.icon.is-small= fa_icon('circle-o')
+            -#            = content_tag(:div, recording.video.pegi_rating_s, class: "tag #{recording.video.pegi_rating_i > 16 ? 'is-danger' : 'is-warning'}")
+            -#        .control
+            -#          .plays.tags.has-addons
+            -#            %a.tag.is-success.icon.is-small= fa_icon('play')
+            -#            .tag.is-small.is-info= 4500
+
+#player_modal.modal
+  .modal-background
+  .modal-content
+    -#.player
+    -#  %video(width="720" height="404")
+    -#    %source(type="video/mp4" src="")
+
+  %button.modal-close.is-large(aria-label="Close")
