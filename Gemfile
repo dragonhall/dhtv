@@ -48,10 +48,11 @@ end
 
 group :development do
 
-  gem 'capistrano-linked-files'
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano3-puma'
+  gem 'capistrano-linked-files', require: false
+  gem 'capistrano-rails', require: false
+  gem 'rvm1-capistrano3', require: false
+  gem 'capistrano3-puma', require: false
+  
   gem 'fuubar'
   gem 'meta_request'
   gem 'pry-rails'
