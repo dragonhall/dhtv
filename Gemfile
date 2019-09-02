@@ -50,7 +50,7 @@ group :development do
 
   gem 'capistrano-linked-files'
   gem 'capistrano-rails'
-  gem 'capistrano-rvm'
+  gem 'rvm1-capistrano3'
   gem 'capistrano3-puma'
   gem 'fuubar'
   gem 'meta_request'
