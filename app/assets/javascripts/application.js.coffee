@@ -11,9 +11,13 @@
 # about supported directives.
 #
 #= require jquery
+#= require jquery.initialize
+#= require hls.js/dist/hls.light
 #= require flowplayer
 #= require rails-ujs
 #= require_tree .
+
+
 
 window.pollTV = ($) ->
   $.ajax
@@ -24,19 +28,17 @@ window.pollTV = ($) ->
 #      console.log(data.content)
       player = $(data.content)
 
-      console.log(player.has('.player')[0] != undefined )
-      console.log($('#player .player').length == 0)
-
-
-      if(player.has('.player') and $('#player .player').length == 0)
+      console.log({remote_player:player.has('.player')[0] != undefined})
+      console.log({html_player:$('#player').has('.player')[0] != undefined})
+      console.log({isTVActive: window.isTVActive})
+      
+      if player.has('.player') and !window.isTVActive
+        console.log('Adding player')
         $('#player').empty()
         $('#player').append(player)
 
-      if($('#player .player > video').length > 0)
-        console.log('Installing Flowplayer')
-        $('#player .player').flowplayer()
-
-  window.setTimeout(pollTV, 3000, $)
+  if !window.isTVActive
+    window.setTimeout(pollTV, 3000, $)
 
 
 jQuery ->
@@ -59,7 +61,12 @@ jQuery ->
     $('#player_modal .player').flowplayer()
     $('#player_modal').addClass('is-active').show()
 
+  jQuery.initialize '#player .player', ->
+    $(this).flowplayer()
+    window.isTVActive = true
+
   if($(document).has('#player'))
+    window.isTVActive = false
     window.pollTV(jQuery)
 
 
