@@ -1,5 +1,8 @@
 {
   "name": "dhtv",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "hls.js": "^0.12.4",
+    "jquery.initialize": "^1.3.0"
+  }
 }
