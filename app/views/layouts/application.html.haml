@@ -38,5 +38,17 @@
             = navbar_item_link_to faw_icon('film', text: 'Videótár'), recordings_url
             = navbar_item_link_to faw_icon('television', text: 'TV'), root_url
           .navbar-end
-            = navbar_item_link_to content_tag(:span, faw_icon('facebook'), class: 'icon', style: 'color: #3b5998'), 'https://www.facebook.com/dragonhall.hu'
+            = navbar_item_link_to content_tag(:span, '&sect;'.html_safe, class: 'icon'), '#', class: 'legalcode'
+            = navbar_item_link_to content_tag(:span, faw_icon('twitter'), class: 'icon', style: 'color: #00aced'), 'https://twitter.com/dragonhallplus', target: '_blank', rel: 'noopener'
+            = navbar_item_link_to content_tag(:span, faw_icon('facebook'), class: 'icon', style: 'color: #3b5998'), 'https://www.facebook.com/dragonhall.hu', target: '_blank', rel: 'noopener'
     = yield
+    #legal_modal.modal
+      .modal-background
+      .modal-card
+        %header.modal-card-head
+          %p.modal-card-title DragonHall+ TV Szabályzat
+          %button.delete(aria-label="Bezárás")
+        %section.modal-card-body
+          Content
+        %footer.modal-card-foot
+          %button.button.is-success Megértettem

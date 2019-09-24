@@ -48,6 +48,27 @@ jQuery ->
     $(this).parent().removeClass('is-active').hide()
     $(this).parent().find('video')[0].pause()
     $(this).parent().find('.player').remove()
+
+
+  $('#legal_modal button.delete, #legal_modal button.is-success').on 'click', (e) ->
+    e.preventDefault()
+    $('#legal_modal').removeClass('is-active').hide()
+
+  $('.legalcode').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    $('#legal_modal .modal-card-body').load('/szabalyzat.html main')
+    $('#legal_modal .modal-card-body > footer').remove()
+    $('#legal_modal').addClass('is-active').show()
+
+    #jQuery.ajax
+    #  url: '/szabalyzat.html'
+    #  method: 'GET'
+    #  success: (data,status,jqXHR) ->
+    #    rules = $(data).find('main')
+    #    $('#legal_modal .modal-card-body').empty()
+    #    $('#legal_modal .modal-card-body').append(rules)
+    #    $('#legal_modal').addClass('is-active').show()
 #
 #
   $('.gallery-text').on 'click', (e) ->
@@ -84,14 +105,63 @@ jQuery ->
     e.preventDefault()
     $('#program').hide()
     $('#player').show()
+    $('#player').find('video').each () ->
+      this.play()
     $('#tabProgram').parent().removeClass('is-active')
     $('#tabTV').parent().addClass('is-active')
 
   $('#tabProgram').on 'click', (e) ->
     e.preventDefault()
-#    $('#program').show()
-#    $('#player').hide()
-#    $('#tabTV').parent().removeClass('is-active')
-#    $('#tabProgram').parent().addClass('is-active')
+    $('#player').find('video').each () ->
+      if 'stop' of this
+        this.stop()
+    $('#player').hide()
+    $('#program').show()
+    $('#tabTV').parent().removeClass('is-active')
+
+    ## Initialize program book
+    program_id = $('#program_book').data('playlist')
+
+    jQuery.ajax
+      url: "/playlists/#{program_id}"
+      method: 'GET'
+      type: 'JSON'
+      success: (data, status, jqXHR) ->
+        prev = data.previous
+        next = data.next
+        $('#program .pagination-previous').data 'playlist', prev
+        $('#program .pagination-previous').attr 'aria-disabled', (if prev <= 0 then 'true' else 'false')
+        $('#program .pagination-previous').attr 'disabled', (prev <= 0)
+
+        $('#program .pagination-next').data 'playlist', next
+        $('#program .pagination-next').attr 'aria-disabled', (if next <= 0 then 'true' else 'false')
+        $('#program .pagination-next').attr 'disabled', (next <= 0)
 
 
+    $('#tabProgram').parent().addClass('is-active')
+
+  ## Program navigation. Only AJAX if non-zero value set
+  $('#program .pagination-previous, #program .pagination-next').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    program_id = $(this).data 'playlist'
+    if !$(this).attr('disabled') and program_id > 0
+      jQuery.ajax
+        url: "/playlists/#{program_id}"
+        method: 'GET'
+        type: 'JSON'
+        success: (data, status, jqXHR) ->
+          prev = data.previous
+          next = data.next
+          window.frames[0].location.href = "#{window.location.origin}/playlists/#{program_id}/tracks"
+
+          $('#program .pagination-previous').data 'playlist', prev
+          $('#program .pagination-previous').attr 'aria-disabled', (if prev <= 0 then 'true' else 'false')
+          $('#program .pagination-previous').attr 'disabled', (prev <= 0)
+
+          $('#program .pagination-next').data 'playlist', next
+          $('#program .pagination-next').attr 'aria-disabled', (if next <= 0 then 'true' else 'false')
+          $('#program .pagination-next').attr 'disabled', (next <= 0)
+
+# vim: ts=2 sw=2 et

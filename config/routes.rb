@@ -4,5 +4,9 @@ Rails.application.routes.draw do
 
   get '/tv/index'
 
+  resources :playlists do
+    resources :tracks
+  end
+
   root to: 'tv#index'
 end

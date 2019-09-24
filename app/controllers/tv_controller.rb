@@ -2,8 +2,9 @@ class TvController < ApplicationController
   respond_to :html, :json
 
   def index
-    @channel = Channel.where(domain: request.host).first
-    @playlist = @channel.playlists.active.any? ? @channel.playlists.active.first : nil
+    @channel = Channel.where(domain: request.host).any? ? Channel.where(domain: request.host).first : nil
+    @playlist = (!@channel.blank? && @channel.playlists.active.any?) ? @channel.playlists.active.first : nil
+    @today_playlist = @channel.playlists.where('CAST(start_time AS date) = ?', Time.zone.now.to_date).first || nil
     respond_to do |format|
       format.html
       format.json do

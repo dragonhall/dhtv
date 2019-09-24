@@ -1,0 +1,93 @@
+body, html {
+  min-height: 100%;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  //background-color: #fff;
+  //border: 1px solid red;
+  padding: 0;
+  margin: 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 0.2em;
+  right: 0.2em;
+  width: 100%;
+  text-align: right;
+
+}
+
+
+ul {
+  list-style: none;
+  //float: left;
+  //li { background: yellow; }
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  li {
+    padding-bottom: 0.2em;
+  }
+}
+
+#wrapper {
+  text-align: center;
+  margin: 1.6em auto;
+  height: 100%;
+  //background: purple;
+
+  #schedule_wrapper {
+    background: rgba(151, 204, 237, 0.5);
+    border-radius: 10px;
+    margin: 0 auto;
+    text-align: left;
+    width: 70%;
+  }
+}
+
+// DESKTOP LAYOUT
+@media screen and (min-width: 800px) {
+  #heading {
+    font-size: 2em;
+    //color: green !important;
+  }
+
+  #wrapper {
+    font-size: 1.2em;
+
+    #schedule_wrapper {
+      //margin-left: 16%;
+      width: 65%;
+      letter-spacing: 1px;
+      margin-top: 2em;
+    }
+  }
+}
+
+// MOBILE LAYOUT
+@media screen and (max-width: 800px) {
+  #heading {
+    font-size: 1.2em;
+    //color: lightcoral;
+  }
+  #wrapper {
+    //margin-top: 1.0em;
+
+    #schedule_wrapper {
+      //margin-left: 14%;
+      margin-top: 2em;
+      font-size: 0.65em;
+    }
+
+    ul {
+      //  width: 40%;
+      li {
+        padding-bottom: 0.5em;
+      }
+    }
+  }
+}

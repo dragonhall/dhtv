@@ -95,3 +95,21 @@ a.tag {
   background-color: $black;
   color: $white;
 }
+
+#legal_modal .modal-card-body {
+  main {
+    padding: 5px 15px;
+    & > ol {
+      li {
+        padding-bottom: 20px;
+      }
+    }
+    footer {
+      display: none;
+    }
+  }
+}
+
+#legal_modal .modal-card-foot {
+  justify-content: center;
+}

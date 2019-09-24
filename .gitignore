@@ -6,6 +6,7 @@ capybara-*.html
 /tmp
 /db/*.sqlite3
 /db/*.sqlite3-journal
+/db/schema.rb
 /public/system
 /public/assets
 /public/uploads
@@ -23,6 +24,7 @@ config/initializers/secret_token.rb
 
 # Only include if you have production secrets in this file, which is no longer a Rails default
 /config/secrets.yml
+/config/redis.yml
 /config/database.yml
 
 # dotenv

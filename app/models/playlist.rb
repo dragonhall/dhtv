@@ -43,7 +43,7 @@ class Playlist < ApplicationRecord
   end
 
   def program_as_json
-    program = {
+    {
       title: title,
       start_time: start_time,
       end_time: end_time,
@@ -102,6 +102,28 @@ class Playlist < ApplicationRecord
 
   def program?
     Rails.public_dir.join(program_path.sub(%r{^/}, '')).exist?
+  end
+  def human_title
+    if !defined?(@human_title) or @human_title.blank?
+      @human_title = if start_time.to_date == Time.zone.now.to_date then
+                       'Mai'
+                     elsif start_time.to_date == (Time.zone.now - 1.day).to_date then
+                       'Tegnapi'
+                     elsif start_time.to_date == (Time.zone.now + 1.day).to_date then
+                       'Holnapi'
+                     elsif start_time >= Time.zone.now.to_date.beginning_of_week &&
+                       start_time <= Time.zone.now.to_date.end_of_week then
+                       # 'Heti'
+                       I18n.l(start_time, format: '%Ai').titleize
+                     elsif start_time >= 7.days.from_now.to_date.beginning_of_week &&
+                       start_time <= 7.days.from_now.to_date.end_of_week then
+                       'Jövő Heti'
+                     else
+                       start_time > Time.now.end_of_day ? 'Következő' : 'Előző'
+                     end
+      @human_title += ' Műsor'
+    end
+    @human_title
   end
 
   private
