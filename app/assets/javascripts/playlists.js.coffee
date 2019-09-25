@@ -20,8 +20,8 @@ jQuery ->
         prev = data.previous
         next = data.next
 
-        if prev > 0
-          window.location.href = "#{window.location.origin}/playlists/#{prev}/tracks"
+        if next > 0
+          window.location.href = "#{window.location.origin}/playlists/#{next}/tracks"
 
   $('#wrapper').on 'swiperight', (e) ->
     splitted = window.location.href.split('/')
@@ -35,7 +35,7 @@ jQuery ->
         prev = data.previous
         next = data.next
         
-        if next > 0
-          window.location.href = "#{window.location.origin}/playlists/#{next}/tracks"
+        if prev > 0
+          window.location.href = "#{window.location.origin}/playlists/#{prev}/tracks"
 
 # vim: ts=2 sw=2 et
