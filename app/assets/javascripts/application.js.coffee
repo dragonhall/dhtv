@@ -10,12 +10,13 @@
 # Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 # about supported directives.
 #
-#= require jquery
+#= require jquery/dist/jquery
 #= require jquery.initialize
 #= require hls.js/dist/hls.light
 #= require flowplayer
 #= require rails-ujs
-#= require_tree .
+#= require detectMobile
+#= require_self
 
 
 

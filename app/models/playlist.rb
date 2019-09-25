@@ -24,8 +24,6 @@ class Playlist < ApplicationRecord
   before_save :calculate_duration
   after_initialize :initialize_title
 
-  after_update :postprocess_finalization, if: :saved_change_to_finalized?
-
   def active?
     tracks.where(playing: true).any?
   end
@@ -134,10 +132,5 @@ class Playlist < ApplicationRecord
 
   def initialize_title
     self.title ||= "#{channel ? channel.name : Playlist.model_name} ##{channel.playlists.last.blank? ? 1 : channel.playlists.last.id + 1}" if new_record?
-  end
-
-  def postprocess_finalization
-    PlaylistGeneratorJob.perform_later id
-    Resque.enqueue_at self.start_time, StreamingJob, playlist_id: id
   end
 end
