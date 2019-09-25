@@ -65,10 +65,18 @@ jQuery ->
   $('.legalcode').on 'click', (e) ->
     e.preventDefault()
     e.stopPropagation()
+    $('#legal_modal .modal-card-title').text('DragonHall+ TV Szabályzat')
     $('#legal_modal .modal-card-body').load('/szabalyzat.html main')
     $('#legal_modal .modal-card-body > footer').remove()
     $('#legal_modal').addClass('is-active').show()
 
+  $('.faq').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    $('#legal_modal .modal-card-title').text('DragonHall+ TV - Gyakran Ismételt Kérdések')
+    $('#legal_modal .modal-card-body').load('/gyik.html main')
+    $('#legal_modal .modal-card-body > footer').remove()
+    $('#legal_modal').addClass('is-active').show()
     #jQuery.ajax
     #  url: '/szabalyzat.html'
     #  method: 'GET'
