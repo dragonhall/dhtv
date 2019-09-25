@@ -42,6 +42,13 @@ window.pollTV = ($) ->
 
 
 jQuery ->
+  $('.navbar-burger').on 'click', (e) ->
+    e.preventDefault()
+
+    $('.navbar-burger').toggleClass('is-active')
+    target = $('.navbar-burger').data('target')
+    $target = $('#' + target)
+    $target.toggleClass('is-active')
 
   $('#player_modal .modal-close').on 'click', (e) ->
     e.preventDefault()
@@ -112,6 +119,14 @@ jQuery ->
 
   $('#tabProgram').on 'click', (e) ->
     e.preventDefault()
+
+    program_id = $('#program_book').data('playlist')
+
+    if detectMobile()
+      window.open("#{window.location.origin}/playlists/#{program_id}/tracks", '_blank').focus()
+      return false
+    
+
     $('#player').find('video').each () ->
       if 'stop' of this
         this.stop()
@@ -120,7 +135,6 @@ jQuery ->
     $('#tabTV').parent().removeClass('is-active')
 
     ## Initialize program book
-    program_id = $('#program_book').data('playlist')
 
     jQuery.ajax
       url: "/playlists/#{program_id}"

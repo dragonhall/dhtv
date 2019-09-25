@@ -4,7 +4,7 @@ class TvController < ApplicationController
   def index
     @channel = Channel.where(domain: request.host).any? ? Channel.where(domain: request.host).first : nil
     @playlist = (!@channel.blank? && @channel.playlists.active.any?) ? @channel.playlists.active.first : nil
-    @today_playlist = @channel.playlists.where('CAST(start_time AS date) = ?', Time.zone.now.to_date).first || nil
+    @today_playlist = @channel.playlists.finalized.where('CAST(start_time AS date) = ?', Time.zone.now.to_date).first || nil
     respond_to do |format|
       format.html
       format.json do
