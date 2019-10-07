@@ -9,6 +9,7 @@
     %meta{ name: 'twitter:image', content: image_path('dhtv_social.png') }
     %meta(name="twitter:description" content="Szinkronba hozzuk az animéket!")
 
+
     %title
       = content_for?(:title) ? "#{content_for(:title)} - " : ''
       DragonHall+ TV
@@ -59,3 +60,7 @@
           Content
         %footer.modal-card-foot
           %button.button.is-success Megértettem
+    - if GoogleAnalytics.valid_tracker?
+      = analytics_init 
+      %script{async: true, src: "https://www.googletagmanager.com/gtag/js?id=#{GA.tracker}"}
+
