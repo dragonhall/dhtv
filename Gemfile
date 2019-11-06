@@ -85,7 +85,7 @@ group :application do
 
   gem 'rails-i18n'
   gem 'rollbar'
-  gem 'simple_form'
+  # gem 'simple_form'
 
   gem 'google-analytics-rails'
   gem 'ads-rails'
