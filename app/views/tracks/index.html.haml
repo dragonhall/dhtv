@@ -1,0 +1,5 @@
+%ul
+  - @playlist.tracks.films.each do |track|
+    %li
+      %span.time= track.start_time.strftime('%H:%M&nbsp;').html_safe;
+      = track.title.size > 80 ? track.title[0..76] + '...' : track.title

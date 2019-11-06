@@ -16,4 +16,13 @@
 
 
       #program.container(style="width: 70%; margin-top: 20px; display: none; text-align: center;")
-        = image_tag 'http://via.placeholder.com/720x404?text=Program', size: '720x404'
+        -#= image_tag 'http://via.placeholder.com/720x404?text=Program', size: '720x404', style: 'width: 100%'
+        - if @today_playlist
+          = content_tag :iframe, '', id: 'program_book', src: playlist_tracks_url(playlist_id: @today_playlist.id), style: 'width: 795px; height: 500px; overflow: hidden;', scrolling: 'no', data: { playlist: @today_playlist.id }
+          %nav.pagination.is-rounded.is-centered(role="navigation" aria-label="pagination")
+            %a.pagination-previous &laquo;
+            %a.pagination-next &raquo;
+        - else
+          #program_book(style="width: 100%; background: #ccc; color: #999;")
+            .no-program(style="padding: 200px 0; font-size: 3em;") Bocs, ma nincs adás.
+

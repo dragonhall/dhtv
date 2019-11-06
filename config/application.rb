@@ -51,5 +51,7 @@ module Dhtv
 			generators.system_tests = nil
     end
 
+    config.time_zone = 'Budapest'
+    config.i18n.default_locale = :hu
   end
 end

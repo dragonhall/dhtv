@@ -10,10 +10,15 @@
 # Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 # about supported directives.
 #
-#= require jquery
+#= require jquery/dist/jquery
+#= require jquery.initialize
+#= require hls.js/dist/hls.light
 #= require flowplayer
 #= require rails-ujs
-#= require_tree .
+#= require detectMobile
+#= require_self
+
+
 
 window.pollTV = ($) ->
   $.ajax
@@ -24,28 +29,62 @@ window.pollTV = ($) ->
 #      console.log(data.content)
       player = $(data.content)
 
-      console.log(player.has('.player')[0] != undefined )
-      console.log($('#player .player').length == 0)
-
-
-      if(player.has('.player') and $('#player .player').length == 0)
+      console.log({remote_player:player.has('.player')[0] != undefined})
+      console.log({html_player:$('#player').has('.player')[0] != undefined})
+      console.log({isTVActive: window.isTVActive})
+      
+      if player.has('.player') and !window.isTVActive
+        console.log('Adding player')
         $('#player').empty()
         $('#player').append(player)
 
-      if($('#player .player > video').length > 0)
-        console.log('Installing Flowplayer')
-        $('#player .player').flowplayer()
-
-  window.setTimeout(pollTV, 3000, $)
+  if !window.isTVActive
+    window.setTimeout(pollTV, 3000, $)
 
 
 jQuery ->
+  $('.navbar-burger').on 'click', (e) ->
+    e.preventDefault()
+
+    $('.navbar-burger').toggleClass('is-active')
+    target = $('.navbar-burger').data('target')
+    $target = $('#' + target)
+    $target.toggleClass('is-active')
 
   $('#player_modal .modal-close').on 'click', (e) ->
     e.preventDefault()
     $(this).parent().removeClass('is-active').hide()
     $(this).parent().find('video')[0].pause()
     $(this).parent().find('.player').remove()
+
+
+  $('#legal_modal button.delete, #legal_modal button.is-success').on 'click', (e) ->
+    e.preventDefault()
+    $('#legal_modal').removeClass('is-active').hide()
+
+  $('.legalcode').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    $('#legal_modal .modal-card-title').text('DragonHall+ TV Szabályzat')
+    $('#legal_modal .modal-card-body').load('/szabalyzat.html main')
+    $('#legal_modal .modal-card-body > footer').remove()
+    $('#legal_modal').addClass('is-active').show()
+
+  $('.faq').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    $('#legal_modal .modal-card-title').text('DragonHall+ TV - Gyakran Ismételt Kérdések')
+    $('#legal_modal .modal-card-body').load('/gyik.html main')
+    $('#legal_modal .modal-card-body > footer').remove()
+    $('#legal_modal').addClass('is-active').show()
+    #jQuery.ajax
+    #  url: '/szabalyzat.html'
+    #  method: 'GET'
+    #  success: (data,status,jqXHR) ->
+    #    rules = $(data).find('main')
+    #    $('#legal_modal .modal-card-body').empty()
+    #    $('#legal_modal .modal-card-body').append(rules)
+    #    $('#legal_modal').addClass('is-active').show()
 #
 #
   $('.gallery-text').on 'click', (e) ->
@@ -59,7 +98,12 @@ jQuery ->
     $('#player_modal .player').flowplayer()
     $('#player_modal').addClass('is-active').show()
 
+  jQuery.initialize '#player .player', ->
+    $(this).flowplayer()
+    window.isTVActive = true
+
   if($(document).has('#player'))
+    window.isTVActive = false
     window.pollTV(jQuery)
 
 
@@ -77,14 +121,70 @@ jQuery ->
     e.preventDefault()
     $('#program').hide()
     $('#player').show()
+    $('#player').find('video').each () ->
+      this.play()
     $('#tabProgram').parent().removeClass('is-active')
     $('#tabTV').parent().addClass('is-active')
 
   $('#tabProgram').on 'click', (e) ->
     e.preventDefault()
-#    $('#program').show()
-#    $('#player').hide()
-#    $('#tabTV').parent().removeClass('is-active')
-#    $('#tabProgram').parent().addClass('is-active')
+
+    program_id = $('#program_book').data('playlist')
+
+    if detectMobile()
+      window.open("#{window.location.origin}/playlists/#{program_id}/tracks", '_blank').focus()
+      return false
+    
+
+    $('#player').find('video').each () ->
+      if 'stop' of this
+        this.stop()
+    $('#player').hide()
+    $('#program').show()
+    $('#tabTV').parent().removeClass('is-active')
+
+    ## Initialize program book
+
+    jQuery.ajax
+      url: "/playlists/#{program_id}"
+      method: 'GET'
+      type: 'JSON'
+      success: (data, status, jqXHR) ->
+        prev = data.previous
+        next = data.next
+        $('#program .pagination-previous').data 'playlist', prev
+        $('#program .pagination-previous').attr 'aria-disabled', (if prev <= 0 then 'true' else 'false')
+        $('#program .pagination-previous').attr 'disabled', (prev <= 0)
+
+        $('#program .pagination-next').data 'playlist', next
+        $('#program .pagination-next').attr 'aria-disabled', (if next <= 0 then 'true' else 'false')
+        $('#program .pagination-next').attr 'disabled', (next <= 0)
 
 
+    $('#tabProgram').parent().addClass('is-active')
+
+  ## Program navigation. Only AJAX if non-zero value set
+  $('#program .pagination-previous, #program .pagination-next').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    program_id = $(this).data 'playlist'
+    if !$(this).attr('disabled') and program_id > 0
+      jQuery.ajax
+        url: "/playlists/#{program_id}"
+        method: 'GET'
+        type: 'JSON'
+        success: (data, status, jqXHR) ->
+          prev = data.previous
+          next = data.next
+          window.frames[0].location.href = "#{window.location.origin}/playlists/#{program_id}/tracks"
+
+          $('#program .pagination-previous').data 'playlist', prev
+          $('#program .pagination-previous').attr 'aria-disabled', (if prev <= 0 then 'true' else 'false')
+          $('#program .pagination-previous').attr 'disabled', (prev <= 0)
+
+          $('#program .pagination-next').data 'playlist', next
+          $('#program .pagination-next').attr 'aria-disabled', (if next <= 0 then 'true' else 'false')
+          $('#program .pagination-next').attr 'disabled', (next <= 0)
+
+# vim: ts=2 sw=2 et

@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   resources :recordings
 
   get '/tv/index'
+  get '/tv/banner'
+
+  resources :playlists do
+    resources :tracks
+  end
 
   root to: 'tv#index'
 end

@@ -2,8 +2,8 @@ class TvController < ApplicationController
   respond_to :html, :json
 
   def index
-    @channel = Channel.where(domain: request.host).first
-    @playlist = @channel.playlists.active.any? ? @channel.playlists.active.first : nil
+    @playlist = (!channel.blank? && channel.playlists.active.any?) ? channel.playlists.active.first : nil
+    @today_playlist = channel.playlists.finalized.where('CAST(start_time AS date) = ?', Time.zone.now.to_date).first || nil
     respond_to do |format|
       format.html
       format.json do
@@ -14,6 +14,26 @@ class TvController < ApplicationController
         end
       end
     end
+  end
+
+  def banner
+    respond_to do |format|
+      banner_base = '/szeroka/dh0/www/index_elemei/tv_panel'
+      banner = channel.playlists.active.any? ? "#{banner_base}/DHTV_panel_elo.png" : "#{banner_base}/DHTV_panel.png"
+      format.html do
+        response.headers['Expires'] = 1.day.ago
+        response.headers['Cache-Control'] = 'no-cache'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Last-Modified'] = Time.zone.now.strftime("%a, %d %b %Y %T %Z")
+        send_data File.read(banner), type: 'image/png', disposition: :inline
+      end
+    end
+  end
+
+  private
+
+  def channel
+    @channel ||= Channel.where(domain: request.host).any? ? Channel.where(domain: request.host).first : nil
   end
 end
 

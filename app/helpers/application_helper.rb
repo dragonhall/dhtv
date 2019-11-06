@@ -28,7 +28,7 @@ module ApplicationHelper
   def faw_icon(icon, options = {})
     text = options.delete(:text)
     text_options = options.delete(:text_options) || {}
-    options[:class] = options.key?(:class) ? options[:class] + ' icon is-small' : 'icon is-small'
+    options[:class] = options.key?(:class) ? options[:class] + ' icon' : 'icon'
 
     (content_tag(:span, fa_icon(icon), options) +
         (text.blank? ? '' : content_tag(:span, text, text_options))).html_safe
