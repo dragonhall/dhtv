@@ -9,3 +9,4 @@ set :nginx_server_name, 'tv.dragonhall.hu'
 
 set :ssh_options, keys: %W[#{ENV['HOME']}/.ssh/id_rsa], auth_methods: %w[publickey] #, verbose: :debug
 
+set :branch, ENV.fetch('DEPLOY_BRANCH') { 'master' }.to_sym
