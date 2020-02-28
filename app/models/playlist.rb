@@ -101,6 +101,7 @@ class Playlist < ApplicationRecord
   def program?
     Rails.public_dir.join(program_path.sub(%r{^/}, '')).exist?
   end
+
   def human_title
     if !defined?(@human_title) or @human_title.blank?
       @human_title = if start_time.to_date == Time.zone.now.to_date then
