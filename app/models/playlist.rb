@@ -128,7 +128,9 @@ class Playlist < ApplicationRecord
   private
 
   def calculate_duration
-    self.duration = tracks.collect(&:length).sum
+    unless self.finalized? or tracks.where(playing: true).any?
+      self.duration = tracks.collect(&:length).sum
+    end
   end
 
   def initialize_title
