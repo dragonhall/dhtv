@@ -1,4 +1,4 @@
-server 'szeroka.dragonhall.hu', user: 'showtime', roles: %w[app db web], port: 15_412
+server '94.199.181.111', user: 'showtime', roles: %w[app db web], port: 15_412
 
 set :nginx_sites_available_path, '/opt/nginx-with-rtmp/conf/sites-available'
 set :nginx_sites_enabled_path, '/opt/nginx-with-rtmp/conf/sites-enabled'
