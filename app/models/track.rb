@@ -26,7 +26,7 @@ class Track < ApplicationRecord
   after_destroy :renumber_playlist
 
   def length
-    video.metadata['length'] || 0
+    ( video && video.metadata ) ? video.metadata['length'] : 0
   end
 
   def stop!
