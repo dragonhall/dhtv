@@ -26,3 +26,13 @@
           #program_book(style="width: 100%; background: #ccc; color: #999;")
             .no-program(style="padding: 200px 0; font-size: 3em;") Bocs, ma nincs adás.
 
+    .box#support
+      .has-text-centered
+        #adsense(style="width: 913px; border: 1px solid purple; margin: 0 auto 20px;")
+          = render partial: 'adsense'
+
+      .has-text-centered
+        = image_tag('adsense.png', title: 'Azzal is támogathatsz minket, ha rákattintasz a lenti reklámra!', alt: 'Gooogle Adsense')
+        = link_to image_tag('paypal.png', alt: 'PayPal támogatás'), 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7749B6F47BRFC&source=url', target: '_blank'
+        = link_to image_tag('patreon.png', alt: 'Patreon támogatás'), 'https://www.patreon.com/dragonhallplus'
+
