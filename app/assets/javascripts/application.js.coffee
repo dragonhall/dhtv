@@ -38,6 +38,20 @@ window.pollTV = ($) ->
         $('#player').empty()
         $('#player').append(player)
 
+
+  if window.ga?
+    $.ajax
+      url: '/tv/current.json'
+      method: 'GET'
+      success: (data, status, xhr) ->
+        oldTrack = window.activeTrack
+        window.activeTrack = data
+
+        if oldTrack? or oldTrack.id != window.activeTrack.id
+          gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
+          ga('set', 'title', window.activeTrack.title)
+          ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
+
   if !window.isTVActive
     window.setTimeout(pollTV, 3000, $)
 
