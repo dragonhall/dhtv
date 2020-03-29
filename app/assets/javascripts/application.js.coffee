@@ -38,7 +38,10 @@ window.pollTV = ($) ->
         $('#player').empty()
         $('#player').append(player)
 
+  if !window.isTVActive
+    window.setTimeout(pollTV, 3000, $)
 
+window.pollGA = ($) ->
   if window.ga?
     $.ajax
       url: '/tv/current.json'
@@ -51,10 +54,8 @@ window.pollTV = ($) ->
           gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
           ga('set', 'title', window.activeTrack.title)
           ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
-
-  if !window.isTVActive
-    window.setTimeout(pollTV, 3000, $)
-
+  
+  window.setTimeout(pollGA, 3000, $)
 
 jQuery ->
   $('.navbar-burger').on 'click', (e) ->
@@ -119,6 +120,7 @@ jQuery ->
   if($(document).has('#player'))
     window.isTVActive = false
     window.pollTV(jQuery)
+    window.pollGA(jQuery)
 
 
   #        alert(data.status)
