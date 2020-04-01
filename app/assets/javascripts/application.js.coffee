@@ -47,10 +47,10 @@ window.pollGA = ($) ->
       url: '/tv/current.json'
       method: 'GET'
       success: (data, status, xhr) ->
-        oldTrack = window.activeTrack
+        window.oldTrack = window.activeTrack.id
         window.activeTrack = data
 
-        if oldTrack? or oldTrack.id != window.activeTrack.id
+        if window.oldTrack? or window.oldTrack != window.activeTrack.id
           gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
           ga('set', 'title', window.activeTrack.title)
           ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
