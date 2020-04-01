@@ -47,10 +47,11 @@ window.pollGA = ($) ->
       url: '/tv/current.json'
       method: 'GET'
       success: (data, status, xhr) ->
-        window.oldTrack = window.activeTrack.id
+        window.oldTrack = window.activeTrack
         window.activeTrack = data
 
-        if window.oldTrack? or window.oldTrack != window.activeTrack.id
+        if (not window.oldTrack?) or (window.oldTrack.id != window.activeTrack.id)
+          console.log("Sending data to Google Analytics")
           gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
           ga('set', 'title', window.activeTrack.title)
           ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
