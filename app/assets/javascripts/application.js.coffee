@@ -77,16 +77,15 @@ jQuery ->
     $('#legal_modal .modal-card-body').load('/gyik.html main')
     $('#legal_modal .modal-card-body > footer').remove()
     $('#legal_modal').addClass('is-active').show()
-    #jQuery.ajax
-    #  url: '/szabalyzat.html'
-    #  method: 'GET'
-    #  success: (data,status,jqXHR) ->
-    #    rules = $(data).find('main')
-    #    $('#legal_modal .modal-card-body').empty()
-    #    $('#legal_modal .modal-card-body').append(rules)
-    #    $('#legal_modal').addClass('is-active').show()
-#
-#
+
+  $('.tip-support').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    $('#legal_modal .modal-card-title').text('DragonHall+ TV - Mindent a támogatásról')
+    $('#legal_modal .modal-card-body').load('/tip.html main')
+    $('#legal_modal .modal-card-body > footer').remove()
+    $('#legal_modal').addClass('is-active').show()
+
   $('.gallery-text').on 'click', (e) ->
     e.preventDefault()
 
