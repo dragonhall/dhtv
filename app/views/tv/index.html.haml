@@ -7,7 +7,10 @@
           %li.is-active
             = link_to faw_icon('television', text: 'Lejátszó'), '#', id: 'tabTV'
           %li
-            = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram'
+            - if Playlist.at_today.any?
+              = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram'
+            - else
+              = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram', class: 'has-text-grey-light', disabled: true
       #player.container.is-centered(style="width: 70%; margin-top: 20px; text-align: center;")
         - if @playlist
           = render partial: 'player'
