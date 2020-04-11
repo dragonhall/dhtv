@@ -206,4 +206,8 @@ jQuery ->
           $('#program .pagination-next').attr 'aria-disabled', (if next <= 0 then 'true' else 'false')
           $('#program .pagination-next').attr 'disabled', (next <= 0)
 
+
+  $('img.adsense').on 'load', (e) ->
+    if window.ga?
+      ga('send', 'pageview', '/assets/adsense.png')
 # vim: ts=2 sw=2 et
