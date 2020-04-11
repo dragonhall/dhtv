@@ -143,7 +143,10 @@ jQuery ->
     $('#tabProgram').parent().removeClass('is-active')
     $('#tabTV').parent().addClass('is-active')
 
-  $('#tabProgram').on 'click', (e) ->
+  $('#tabProgram[disabled]').on 'click', (e) ->
+    e.preventDefault()
+
+  $('#tabProgram:not([disabled])').on 'click', (e) ->
     e.preventDefault()
 
     program_id = $('#program_book').data('playlist')
