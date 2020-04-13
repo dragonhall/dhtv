@@ -7,7 +7,10 @@
           %li.is-active
             = link_to faw_icon('television', text: 'Lejátszó'), '#', id: 'tabTV'
           %li
-            = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram'
+            - if Playlist.at_today.any?
+              = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram'
+            - else
+              = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram', class: 'has-text-grey-light', disabled: true
       #player.container.is-centered(style="width: 70%; margin-top: 20px; text-align: center;")
         - if @playlist
           = render partial: 'player'
@@ -25,4 +28,14 @@
         - else
           #program_book(style="width: 100%; background: #ccc; color: #999;")
             .no-program(style="padding: 200px 0; font-size: 3em;") Bocs, ma nincs adás.
+
+    .box#support
+      .has-text-centered
+        .hide-mobile#adsense(style="max-width: 913px; margin: 0 auto 20px;")
+          = render partial: 'adsense'
+
+      .has-text-centered
+        = image_tag('adsense.png', title: 'Azzal is támogathatsz minket, ha rákattintasz a fenti reklámra!', alt: 'Gooogle Adsense', class: 'hide-mobile adsense')
+        = link_to image_tag('paypal.png', alt: 'PayPal támogatás'), 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S8SG5VFYVJWDC&source=url', target: '_blank'
+        = link_to image_tag('patreon.png', alt: 'Patreon támogatás'), 'https://www.patreon.com/dragonhallplus'
 

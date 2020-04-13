@@ -30,6 +30,10 @@ a.navbar-item {
   }
 }
 
+a[disabled] {
+    cursor: default;
+}
+
 #recordings {
   .gallery-image {
     cursor: pointer;

@@ -41,6 +41,22 @@ window.pollTV = ($) ->
   if !window.isTVActive
     window.setTimeout(pollTV, 3000, $)
 
+window.pollGA = ($) ->
+  if window.ga?
+    $.ajax
+      url: '/tv/current.json'
+      method: 'GET'
+      success: (data, status, xhr) ->
+        window.oldTrack = window.activeTrack
+        window.activeTrack = data
+
+        if (not window.oldTrack?) or (window.oldTrack.id != window.activeTrack.id)
+          console.log("Sending data to Google Analytics")
+          gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
+          ga('set', 'title', window.activeTrack.title)
+          ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
+  
+  window.setTimeout(pollGA, 3000, $)
 
 jQuery ->
   $('.navbar-burger').on 'click', (e) ->
@@ -77,16 +93,15 @@ jQuery ->
     $('#legal_modal .modal-card-body').load('/gyik.html main')
     $('#legal_modal .modal-card-body > footer').remove()
     $('#legal_modal').addClass('is-active').show()
-    #jQuery.ajax
-    #  url: '/szabalyzat.html'
-    #  method: 'GET'
-    #  success: (data,status,jqXHR) ->
-    #    rules = $(data).find('main')
-    #    $('#legal_modal .modal-card-body').empty()
-    #    $('#legal_modal .modal-card-body').append(rules)
-    #    $('#legal_modal').addClass('is-active').show()
-#
-#
+
+  $('.tip-support').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    $('#legal_modal .modal-card-title').text('DragonHall+ TV - Mindent a támogatásról')
+    $('#legal_modal .modal-card-body').load('/tip.html main')
+    $('#legal_modal .modal-card-body > footer').remove()
+    $('#legal_modal').addClass('is-active').show()
+
   $('.gallery-text').on 'click', (e) ->
     e.preventDefault()
 
@@ -105,6 +120,7 @@ jQuery ->
   if($(document).has('#player'))
     window.isTVActive = false
     window.pollTV(jQuery)
+    window.pollGA(jQuery)
 
 
   #        alert(data.status)
@@ -126,7 +142,10 @@ jQuery ->
     $('#tabProgram').parent().removeClass('is-active')
     $('#tabTV').parent().addClass('is-active')
 
-  $('#tabProgram').on 'click', (e) ->
+  $('#tabProgram[disabled]').on 'click', (e) ->
+    e.preventDefault()
+
+  $('#tabProgram:not([disabled])').on 'click', (e) ->
     e.preventDefault()
 
     program_id = $('#program_book').data('playlist')
@@ -187,4 +206,8 @@ jQuery ->
           $('#program .pagination-next').attr 'aria-disabled', (if next <= 0 then 'true' else 'false')
           $('#program .pagination-next').attr 'disabled', (next <= 0)
 
+
+  $('img.adsense').on 'load', (e) ->
+    if window.ga?
+      ga('send', 'pageview', '/assets/adsense.png')
 # vim: ts=2 sw=2 et
