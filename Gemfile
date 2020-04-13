@@ -75,6 +75,7 @@ group :test do
   gem 'cucumber-rails', require: false
   gem 'factory_girl_rails'
   gem 'rubocop'
+  gem 'rubocop-rails'
   gem 'simplecov'
 end
 
