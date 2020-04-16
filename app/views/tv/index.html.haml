@@ -7,7 +7,7 @@
           %li.is-active
             = link_to faw_icon('television', text: 'Lejátszó'), '#', id: 'tabTV'
           %li
-            - if Playlist.at_today.any?
+            - if Playlist.upcoming.at_today.any?
               = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram'
             - else
               = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram', class: 'has-text-grey-light', disabled: true
