@@ -74,8 +74,9 @@ group :test do
   gem 'rspec-rails'
   gem 'cucumber-rails', require: false
   gem 'factory_girl_rails'
-  gem 'rubocop'
-  gem 'rubocop-rails'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
   gem 'simplecov'
 end
 

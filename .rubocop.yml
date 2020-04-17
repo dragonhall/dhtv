@@ -1,0 +1,42 @@
+require: 
+  - rubocop-rails
+  - rubocop-rspec
+
+Lint/SuppressedException:
+  Exclude:
+    - spec/support/*.rb
+
+Style/CommandLiteral:
+  Enabled: false
+
+Style/MultilineIfThen:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Layout/FirstArgumentIndentation:
+  Enabled: false
+
+Layout/ArgumentAlignment:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+
+Style/Documentation:
+  Exclude:
+    - spec/**/*
+    - test/**/*
+    - features/**/*
+    - app/controllers/**/*
+    - app/models/**/*
+    - app/helpers/**/*
+    - app/controllers/**/*
+    - app/jobs/**/*
