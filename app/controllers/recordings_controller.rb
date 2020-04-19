@@ -4,8 +4,8 @@ class RecordingsController < InheritedResources::Base
 
   protected
 
-  def begin_of_association_chain
-    Recording.available.joins(:video).where('videos.recordable' => true).where('videos.series' => params[:series])
+  def collection
+    get_collection_ivar || set_collection_ivar(end_of_association_chain.available)
   end
 
   private
