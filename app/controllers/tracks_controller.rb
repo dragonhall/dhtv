@@ -13,7 +13,11 @@ class TracksController < InheritedResources::Base
 
 
   def current
-    active_track = Track.where(playing: true).any? ? Track.where(playing: true).first : nil
+    active_track = if Track.where(playing: true).joins(:playlist).where('playlists.channel_id' => (channel ? channel.id : -1)).any? then
+                    Track.where(playing: true).joins(:playlist).where('playlists.channel_id' => (channel ? channel.id : -1)).first
+                    else
+                      nil
+                    end
 
     unless active_track.nil?
       track_json = {
@@ -40,6 +44,10 @@ class TracksController < InheritedResources::Base
   def set_title
     #playlist = Playlist.find(params[:playlist_id])
     @title = playlist && playlist.human_title
+  end
+
+  def channel
+    @channel ||= Channel.where(domain: request.host).any? ? Channel.where(domain: request.host).first : nil
   end
 
   #def track_params
