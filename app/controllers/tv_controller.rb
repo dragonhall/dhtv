@@ -6,13 +6,13 @@ class TvController < ApplicationController
     @today_playlist = channel.playlists.finalized.where('CAST(start_time AS date) = ?', Time.zone.now.to_date).first || nil
     respond_to do |format|
       format.html
-      format.json do
-        if @playlist
-          render json: { online: true, content: render_to_string(partial: 'player.html') }
-        else
-          render json: { online: false, content: render_to_string(partial: 'monoscope.html') }
-        end
-      end
+      # format.json do
+      #   if @playlist
+      #     render json: { online: true, content: render_to_string(partial: 'player.html') }
+      #   else
+      #     render json: { online: false, content: render_to_string(partial: 'monoscope.html') }
+      #   end
+      # end
     end
   end
 

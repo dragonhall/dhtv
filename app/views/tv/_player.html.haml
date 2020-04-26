@@ -1,3 +1,4 @@
-.player{data: { debug: (!Rails.env.production?).to_s }}
-  %video
-    %source{type: 'application/x-mpegURL', src: "https://#{Rails.env.production? ? 'tv.dragonhall.hu' : 'tv.teszt.dragonhall.hu'}/live/#{@playlist.channel.stream_path}.m3u8"}
+-# .player(style="display: none;")
+.player
+  %video#tv_player.video-js.vjs-default-skin.vjs-big-play-centered(controls="controls" preload="none")
+    %source{type: 'application/x-mpegURL', src: "https://#{Rails.env.production? ? 'tv.dragonhall.hu' : 'tv.dragonhall.hu'}/live/#{@playlist.channel.stream_path}.m3u8"}
