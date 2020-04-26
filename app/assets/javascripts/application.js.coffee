@@ -24,7 +24,7 @@ window.pollTV = ($) ->
     url: '/tv/current.json'
     method: 'GET'
     success: (data, status, xhr) ->
-      if not $('#tv_player').length
+      if window.location.pathname == '/' and not $('#tv_player').length
         window.location.reload();
 
       if window.ga?
