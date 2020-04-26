@@ -34,8 +34,9 @@ window.pollTV = ($) ->
         if (not window.oldTrack?) or (window.oldTrack.id != window.activeTrack.id)
           console.log("Sending data to Google Analytics")
           gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
+          category = window.activeTrack.category
           ga('set', 'title', window.activeTrack.title)
-          ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
+          ga('send', 'pageview', "/tv?active#{category}=#{gaTitle}")
   
   window.setTimeout(pollTV, 3000, $)
 

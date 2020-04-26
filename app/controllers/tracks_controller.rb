@@ -22,6 +22,7 @@ class TracksController < InheritedResources::Base
         start_time: active_track.start_time,
         end_time: active_track.end_time,
         pegi_rating: active_track.video.pegi_rating_s,
+        category: active_track.video.video_type.to_s.titleize,
         length: Time.at(active_track.length).utc.strftime('%H:%M:%S'),
       }
       render json: track_json, status: :ok
