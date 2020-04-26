@@ -12,49 +12,59 @@
 #
 #= require jquery/dist/jquery
 #= require jquery.initialize
-#= require hls.js/dist/hls.light
-#= require flowplayer
+#= require video.js/dist/video.js
 #= require rails-ujs
 #= require detectMobile
 #= require_self
 
 
 
+# window.pollTV = ($) ->
+#   $.ajax
+#     url: '/tv/index.json'
+#     method: 'GET'
+#     success: (data, status, xhr) ->
+#       player = $(data.content)
+
+#       console.log({remote_player:player.has('.player')[0] != undefined})
+#       console.log({html_player:$('#player').has('.player')[0] != undefined})
+#       console.log({isTVActive: window.isTVActive})
+      
+#       if player.has('.player') and !window.isTVActive
+#         console.log('Adding player')
+#         $('#player').empty()
+#         $('#player').append(player)
+
+#   if !window.isTVActive
+#     window.setTimeout(pollTV, 3000, $)
 window.pollTV = ($) ->
+  
   $.ajax
-    url: '/tv/index.json'
+    url: '/tv/current.json'
     method: 'GET'
     success: (data, status, xhr) ->
-#      console.log(data.online)
-#      console.log(data.content)
-      player = $(data.content)
+      if $('.monoscope').is(':visible')
+        
+        $('.monoscope').hide()
+        $('.player').show()
+        
+        tv_options =
+          liveui: true
+          autoplay: true
+          controls: true
 
-      console.log({remote_player:player.has('.player')[0] != undefined})
-      console.log({html_player:$('#player').has('.player')[0] != undefined})
-      console.log({isTVActive: window.isTVActive})
-      
-      if player.has('.player') and !window.isTVActive
-        console.log('Adding player')
-        $('#player').empty()
-        $('#player').append(player)
+        window.tvPlayer = videojs 'tv_player', tv_options
+        window.tvPlayer.on 'ended', ->
+          this.dispose()
 
-  if !window.isTVActive
-    window.setTimeout(pollTV, 3000, $)
+      window.oldTrack = window.activeTrack
+      window.activeTrack = data
 
-window.pollGA = ($) ->
-  if window.ga?
-    $.ajax
-      url: '/tv/current.json'
-      method: 'GET'
-      success: (data, status, xhr) ->
-        window.oldTrack = window.activeTrack
-        window.activeTrack = data
-
-        if (not window.oldTrack?) or (window.oldTrack.id != window.activeTrack.id)
-          console.log("Sending data to Google Analytics")
-          gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
-          ga('set', 'title', window.activeTrack.title)
-          ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
+      if (not window.oldTrack?) or (window.oldTrack.id != window.activeTrack.id)
+        console.log("Sending data to Google Analytics")
+        gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
+        ga('set', 'title', window.activeTrack.title)
+        ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
   
   window.setTimeout(pollGA, 3000, $)
 
@@ -67,11 +77,42 @@ jQuery ->
     $target = $('#' + target)
     $target.toggleClass('is-active')
 
+  $('.gallery-text').on 'click', (e) ->
+      e.preventDefault()
+
+      src = window.location.origin + $(this).attr('href')
+      poster = window.location.origin + $(this).parent().find('img').attr('src')
+
+      playerSrc = "
+      <video class=\"video-js vjs-default-skin vjs-big-play-centered\" id=\"gallery_player\" width=\"720\" height=\"404\" preload=\"auto\">
+        <source src=\"\" type=\"video/mp4\" />
+      </video>
+      "
+
+      player = $(playerSrc)
+      $('#player_modal .modal-content').append(player)
+
+      player.find('source').attr('src', src)
+      player.attr('poster', poster)
+
+      gallery_params =
+        aspectRatio: '16:9'
+        controls: true
+
+      console.log("Creating gallery player with params: ")
+      console.log(gallery_params)
+
+      videojs(player[0], gallery_params)
+
+      $('#player_modal').addClass('is-active').show()
+
   $('#player_modal .modal-close').on 'click', (e) ->
     e.preventDefault()
     $(this).parent().removeClass('is-active').hide()
-    $(this).parent().find('video')[0].pause()
-    $(this).parent().find('.player').remove()
+
+    galleryPlayer = videojs('gallery_player')
+    galleryPlayer.pause()
+    galleryPlayer.dispose()
 
 
   $('#legal_modal button.delete, #legal_modal button.is-success').on 'click', (e) ->
@@ -101,37 +142,6 @@ jQuery ->
     $('#legal_modal .modal-card-body').load('/tip.html main')
     $('#legal_modal .modal-card-body > footer').remove()
     $('#legal_modal').addClass('is-active').show()
-
-  $('.gallery-text').on 'click', (e) ->
-    e.preventDefault()
-
-    player = $('<div class="player"><video width="720" height="404"><source type="video/mp4"/></video></div>')
-
-    player.find('source').attr(src: $(this).attr('href'))
-
-    $('#player_modal .modal-content').append(player)
-    $('#player_modal .player').flowplayer()
-    $('#player_modal').addClass('is-active').show()
-
-  jQuery.initialize '#player .player', ->
-    $(this).flowplayer()
-    window.isTVActive = true
-
-  if($(document).has('#player'))
-    window.isTVActive = false
-    window.pollTV(jQuery)
-    window.pollGA(jQuery)
-
-
-  #        alert(data.status)
-#        if data.status == 200
-#          player = $('<div class="player" data-debug="true" data-engine="flash"><video width="720" height="404"><source type="video/flash"/></video></div>')
-#          player.find('source').attr(src: data.src)
-#          $('#player').append(player)
-#          $('#player .player').flowplayer()
-#        else if data.status == 404
-#          player = $("<img src='#{data.src}' width='720' height='404' />")
-#          $('#player').append(player)
 
   $('#tabTV').on 'click', (e) ->
     e.preventDefault()

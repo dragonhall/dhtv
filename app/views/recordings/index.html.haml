@@ -25,7 +25,7 @@
                   = image_tag(sprintf('/screenshots/video_%03d.png', recording.video_id), alt: 'WataMote 1.', class: 'gallery-image')
                   -#.gallery-text
                   -#  %h3.icon.is-medium= fa_icon 'play'
-                  = link_to faw_icon('play', class: 'is-medium'), recording.path, class: 'gallery-text'
+                  = link_to faw_icon('play', class: 'is-medium'), "/#{recording.path}", class: 'gallery-text'
               -#.card-content
 
               -#  .panel.has-text-right
@@ -44,11 +44,11 @@
               -#            %a.tag.is-success.icon.is-small= fa_icon('play')
               -#            .tag.is-small.is-info= 4500
 
+
+
 #player_modal.modal
   .modal-background
   .modal-content
-    -#.player
-    -#  %video(width="720" height="404")
-    -#    %source(type="video/mp4" src="")
-
+    -# %video#gallery_player.video-js.vjs-default-skin.vjs-big-play-centered(width="720" height="404")
+    -#   %source(type="video/mp4")
   %button.modal-close.is-large(aria-label="Close")
