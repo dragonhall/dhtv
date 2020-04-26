@@ -12,11 +12,11 @@
             - else
               = link_to faw_icon('newspaper-o', text: 'Műsor'), '#', id: 'tabProgram', class: 'has-text-grey-light', disabled: true
       #player.container.is-centered(style="width: 70%; margin-top: 20px; text-align: center;")
-        - if @playlist
-          = render partial: 'player'
+        - if @today_playlist.active? then
+          %video#tv_player.video-js.vjs-default-skin.vjs-big-play-centered{controls: 'controls', preload: 'none', poster: image_path('tv_cover.png')}
+            %source{type: 'application/x-mpegURL', src: "https://#{Rails.env.production? ? 'tv.dragonhall.hu' : 'tv.dragonhall.hu'}/live/#{@playlist.channel.stream_path}.m3u8"}
         - else
-          = render partial: 'monoscope'
-
+          = image_tag 'monoscope.png', style: 'width: 100%', class: 'monoscope'
 
       #program.container(style="width: 70%; margin-top: 20px; display: none; text-align: center;")
         -#= image_tag 'http://via.placeholder.com/720x404?text=Program', size: '720x404', style: 'width: 100%'

@@ -11,64 +11,57 @@
 # about supported directives.
 #
 #= require jquery/dist/jquery
-#= require jquery.initialize
-#= require video.js/dist/video.js
+#= require video.js/dist/video
+#= require video.js/dist/lang/hu
+#= require video-js-hu
 #= require rails-ujs
 #= require detectMobile
 #= require_self
 
-
-
-# window.pollTV = ($) ->
-#   $.ajax
-#     url: '/tv/index.json'
-#     method: 'GET'
-#     success: (data, status, xhr) ->
-#       player = $(data.content)
-
-#       console.log({remote_player:player.has('.player')[0] != undefined})
-#       console.log({html_player:$('#player').has('.player')[0] != undefined})
-#       console.log({isTVActive: window.isTVActive})
-      
-#       if player.has('.player') and !window.isTVActive
-#         console.log('Adding player')
-#         $('#player').empty()
-#         $('#player').append(player)
-
-#   if !window.isTVActive
-#     window.setTimeout(pollTV, 3000, $)
 window.pollTV = ($) ->
   
   $.ajax
     url: '/tv/current.json'
     method: 'GET'
     success: (data, status, xhr) ->
-      if $('.monoscope').is(':visible')
-        
-        $('.monoscope').hide()
-        $('.player').show()
-        
-        tv_options =
-          liveui: true
-          autoplay: true
-          controls: true
+      if not $('#tv_player').length
+        window.location.reload();
 
-        window.tvPlayer = videojs 'tv_player', tv_options
-        window.tvPlayer.on 'ended', ->
-          this.dispose()
+      if window.ga?
+        window.oldTrack = window.activeTrack
+        window.activeTrack = data
 
-      window.oldTrack = window.activeTrack
-      window.activeTrack = data
-
-      if (not window.oldTrack?) or (window.oldTrack.id != window.activeTrack.id)
-        console.log("Sending data to Google Analytics")
-        gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
-        ga('set', 'title', window.activeTrack.title)
-        ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
+        if (not window.oldTrack?) or (window.oldTrack.id != window.activeTrack.id)
+          console.log("Sending data to Google Analytics")
+          gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
+          ga('set', 'title', window.activeTrack.title)
+          ga('send', 'pageview', "/tv?activeProgram=#{gaTitle}")
   
-  window.setTimeout(pollGA, 3000, $)
+  window.setTimeout(pollTV, 3000, $)
 
 jQuery ->
+  videojs.options.language = 'hu'
+
+  playerDiv = $('#tv_player')
+
+  if playerDiv.length
+
+    playerDiv.on 'contextmenu', (e) ->
+      e.preventDefault()
+
+    tv_params =
+      liveui: true
+      fluid: true
+      controls: true
+      autoplay: true
+      controlBar:
+        progressControl: false
+        playToggle: false
+
+    tvPlayer = videojs 'tv_player', tv_params
+
+  window.setTimeout(pollTV, 3000, $)
+
   $('.navbar-burger').on 'click', (e) ->
     e.preventDefault()
 
