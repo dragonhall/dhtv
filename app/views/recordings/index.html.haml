@@ -25,7 +25,8 @@
                   = image_tag(sprintf('/screenshots/video_%03d.png', recording.video_id), alt: 'WataMote 1.', class: 'gallery-image')
                   -#.gallery-text
                   -#  %h3.icon.is-medium= fa_icon 'play'
-                  = link_to faw_icon('play', class: 'is-medium'), "/#{recording.path}", class: 'gallery-text'
+                  %div.gallery-text(style="cursor: pointer")
+                    = faw_icon('play', class: 'is-medium', data: {path: "/#{recording.path}"})
               -#.card-content
 
               -#  .panel.has-text-right
