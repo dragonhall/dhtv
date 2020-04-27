@@ -11,6 +11,7 @@
 # about supported directives.
 #
 #= require jquery/dist/jquery
+#= require jquery.initialize
 #= require video.js/dist/video
 #= require video.js/dist/lang/hu
 #= require video-js-hu
@@ -35,6 +36,7 @@ window.pollTV = ($) ->
           console.log("Sending data to Google Analytics")
           gaTitle = window.activeTrack.title.toLowerCase().replace(/[\s:-]+/g, '-')
           category = window.activeTrack.category
+
           ga('set', 'title', window.activeTrack.title)
           ga('send', 'pageview', "/tv?active#{category}=#{gaTitle}")
   
@@ -61,7 +63,8 @@ jQuery ->
 
     tvPlayer = videojs 'tv_player', tv_params
 
-  window.setTimeout(pollTV, 3000, $)
+  if $('.monoscope').length or $('#tv_player').length
+    window.setTimeout(pollTV, 3000, $)
 
   $('.navbar-burger').on 'click', (e) ->
     e.preventDefault()
@@ -74,8 +77,10 @@ jQuery ->
   $('.gallery-text').on 'click', (e) ->
       e.preventDefault()
 
-      src = window.location.origin + $(this).attr('href')
+      src = window.location.origin + $(this).find('.icon').data('path')
       poster = window.location.origin + $(this).parent().find('img').attr('src')
+      title = $(this).parent().parent().parent().find('.card-header-title').text().trim()
+      gaTitle = title.toLowerCase().replace(/[\s:.-]+/g, '-')
 
       playerSrc = "
       <video class=\"video-js vjs-default-skin vjs-big-play-centered\" id=\"gallery_player\" width=\"720\" height=\"404\" preload=\"auto\">
@@ -100,6 +105,12 @@ jQuery ->
 
       $('#player_modal').addClass('is-active').show()
 
+      console.log("Sending data to Google Analytics: " + "/recordings?video=#{gaTitle}")
+      if window.ga?
+        ga('set', 'title', title)
+        ga('send', 'pageview', "/recordings?video=#{gaTitle}")
+
+
   $('#player_modal .modal-close').on 'click', (e) ->
     e.preventDefault()
     $(this).parent().removeClass('is-active').hide()
@@ -108,6 +119,9 @@ jQuery ->
     galleryPlayer.pause()
     galleryPlayer.dispose()
 
+  jQuery.initialize '#gallery_player', ->
+    $(this).on 'contextmenu', (e) ->
+      e.preventDefault()
 
   $('#legal_modal button.delete, #legal_modal button.is-success').on 'click', (e) ->
     e.preventDefault()
