@@ -81,6 +81,7 @@ end
 
 group :application do
   gem 'haml-rails'
+  gem 'dalli'
   gem 'inherited_resources'
   gem 'kaminari'
 
