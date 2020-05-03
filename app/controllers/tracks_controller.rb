@@ -32,6 +32,7 @@ class TracksController < InheritedResources::Base
         category: active_track.video.video_type.to_s.titleize,
         length: Time.at(active_track.length).utc.strftime('%H:%M:%S')
       }
+      response.headers['Access-Control-Allow-Origin'] = '*'
       render json: track_json, status: :ok
     end
   end
