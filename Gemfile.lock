@@ -244,7 +244,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (3.0.0)
     puma (3.12.6)
-    rack (2.2.2)
+    rack (2.2.3)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
     rack-test (1.1.0)
