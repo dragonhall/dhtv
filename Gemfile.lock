@@ -223,7 +223,7 @@ GEM
     minitest (5.14.1)
     multi_json (1.12.1)
     multi_test (0.1.2)
-    mysql2 (0.4.9)
+    mysql2 (0.5.3)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -410,7 +410,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   meta_request
-  mysql2 (>= 0.3.18, < 0.5)
+  mysql2 (>= 0.3.18)
   pry-rails
   puma (= 3.12.6)
   rails (~> 5.1)
