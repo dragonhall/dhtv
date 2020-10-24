@@ -4,6 +4,12 @@ class TvController < ApplicationController
   def index
     @playlist = (!channel.blank? && channel.playlists.active.any?) ? channel.playlists.active.first : nil
     @today_playlist = channel.playlists.finalized.where('CAST(start_time AS date) = ?', Time.zone.now.to_date).first || nil
+
+    @active_track = if Track.where(playing: true).joins(:playlist).where('playlists.channel_id' => (channel ? channel.id : -1)).any? then
+                      Track.where(playing: true).joins(:playlist).where('playlists.channel_id' => (channel ? channel.id : -1)).first
+                    else
+                      nil
+                    end
     respond_to do |format|
       format.html
       # format.json do
