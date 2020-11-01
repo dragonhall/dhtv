@@ -22,7 +22,7 @@ def guard(plugins = {})
   end
 end
 
-gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'mysql2', '>= 0.3.18'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1'
 gem 'puma', '3.12.6'
@@ -81,6 +81,7 @@ end
 
 group :application do
   gem 'haml-rails'
+  gem 'dalli'
   gem 'inherited_resources'
   gem 'kaminari'
 
