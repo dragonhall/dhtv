@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 begin
-    require 'rubocop/rake_task'
-    RuboCop::RakeTask.new
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
 rescue LoadError
-    # pass
+  # pass
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
@@ -61,7 +63,7 @@ end
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-#guard :rspec, cmd: "bundle exec rspec" do
+# guard :rspec, cmd: "bundle exec rspec" do
 #  require "guard/rspec/dsl"
 #  dsl = Guard::RSpec::Dsl.new(self)
 #
@@ -104,7 +106,7 @@ end
 #  watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
 #    Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
 #  end
-#end
+# end
 
 guard 'spring', bundler: true do
   watch('Gemfile.lock')

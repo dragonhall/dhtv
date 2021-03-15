@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 class TvController < ApplicationController
   respond_to :html, :json
 
   def index
-    @playlist = (!channel.blank? && channel.playlists.active.any?) ? channel.playlists.active.first : nil
+    @playlist = !channel.blank? && channel.playlists.active.any? ? channel.playlists.active.first : nil
     @today_playlist = channel.playlists.finalized.where('CAST(start_time AS date) = ?', Time.zone.now.to_date).first || nil
 
-    @active_track = if Track.where(playing: true).joins(:playlist).where('playlists.channel_id' => (channel ? channel.id : -1)).any? then
+    @active_track = if Track.where(playing: true).joins(:playlist).where('playlists.channel_id' => (channel ? channel.id : -1)).any?
                       Track.where(playing: true).joins(:playlist).where('playlists.channel_id' => (channel ? channel.id : -1)).first
-                    else
-                      nil
                     end
     respond_to do |format|
       format.html
@@ -30,7 +30,7 @@ class TvController < ApplicationController
         response.headers['Expires'] = 1.day.ago
         response.headers['Cache-Control'] = 'no-cache'
         response.headers['Pragma'] = 'no-cache'
-        response.headers['Last-Modified'] = Time.zone.now.strftime("%a, %d %b %Y %T %Z")
+        response.headers['Last-Modified'] = Time.zone.now.strftime('%a, %d %b %Y %T %Z')
         send_data File.read(banner), type: 'image/png', disposition: :inline
       end
     end
@@ -42,7 +42,6 @@ class TvController < ApplicationController
     @channel ||= Channel.where(domain: request.host).any? ? Channel.where(domain: request.host).first : nil
   end
 end
-
 
 ###
 # - if @playlist
