@@ -1,0 +1,71 @@
+#require: 
+#  - rubocop-rspec
+
+Layout/LineLength:
+  Max: 128
+
+Metrics/MethodLength:
+  Max: 25
+Metrics/ClassLength:
+  Max: 128
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/CommandLiteral:
+  Enabled: false
+
+Style/MultilineIfThen:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Layout/FirstArgumentIndentation:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Lint/SuppressedException:
+  Exclude:
+    - spec/support/*.rb
+
+Style/Documentation:
+  Exclude:
+    - config/**/*
+    - spec/**/*
+    - test/**/*
+    - features/**/*
+    - app/controllers/**/*
+    - app/models/**/*
+    - app/mailers/**/*
+    - app/helpers/**/*
+    - app/controllers/**/*
+    - app/jobs/**/*
+
+Metrics/AbcSize:
+  Exclude:
+    - app/controllers/tv_controller.rb
+    - app/helpers/application_helper.rb
+    - app/controllers/playlists_controller.rb
+    - app/models/track.rb
+    - app/models/playlist.rb
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - app/controllers/tv_controller.rb
+    - app/helpers/application_helper.rb
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - app/controllers/tv_controller.rb
+    - app/helpers/application_helper.rb
+
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - bin/*

@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
-require "rails"
+require 'rails'
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "action_cable/engine"
-require "sprockets/railtie"
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'action_cable/engine'
+require 'sprockets/railtie'
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-#Bundler.require(*Rails.groups)
+# Bundler.require(*Rails.groups)
 Bundler.require(*Rails.groups, :assets, :application)
 
 module Dhtv
@@ -28,7 +30,7 @@ module Dhtv
 
     # Don't generate system test files.
     config.generators do |generators|
-      unless Rails.env.production? then
+      unless Rails.env.production?
         generators.test_framework :rspec,
                                   view_specs: false,
                                   helper_specs: false,
@@ -47,8 +49,8 @@ module Dhtv
 
       generators.stylesheets :scss
       generators.template_engine :haml
-    	
-			generators.system_tests = nil
+
+      generators.system_tests = nil
     end
 
     config.time_zone = 'Budapest'

@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 class Recording < ApplicationRecord
+  scope :available, lambda {
+    where('recordings.valid_from <= NOW()')
+      .where('recordings.expires_at IS NULL OR recordings.expires_at >= ?', Time.zone.tomorrow.midnight)
+  }
 
-  scope :available, -> {where('recordings.valid_from <= NOW()').where('recordings.expires_at IS NULL OR recordings.expires_at >= ?', Time.zone.tomorrow.midnight)}
-
-  default_scope -> {includes(:video).order(valid_from: 'DESC')}
+  default_scope -> { includes(:video).order(valid_from: 'DESC') }
 
   belongs_to :video
   belongs_to :channel
@@ -31,5 +35,4 @@ class Recording < ApplicationRecord
   def enqueue_recording_job
     RecordingJob.perform_later id
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Video < ApplicationRecord
   # PEGI_RATINGS = [3,7,12,16,18]
 
@@ -43,6 +45,7 @@ class Video < ApplicationRecord
   # @return [Hash]
   def self.pegi_rating_titles
     return @pegi_ratings unless !defined?(@pegi_ratings) || @pegi_ratings.empty?
+
     v = Video.pegi_ratings.map do |rating, i|
       ["#{rating.to_s.sub(/^pegi_/, '')}+", i]
     end
@@ -65,8 +68,8 @@ class Video < ApplicationRecord
   # @return [Hash]
   def self.pegi_icons
     # return @pegi_icons unless !defined?(@pegi_icons) || @pegi_icons.empty?
-    v = Array.new
-    Video.pegi_rating_titles.keys.each_with_index do |r, i|
+    v = []
+    Video.pegi_rating_titles.keys.each_with_index do |r, _i|
       v << [r.sub('+', '').to_i, "/pegi_rating/#{r.sub('+', '')}.png"]
     end
 
@@ -76,13 +79,13 @@ class Video < ApplicationRecord
   # @return [Array]
   def self.series
     @series ||= connection.exec_query(
-        'SELECT DISTINCT series FROM videos'
+      'SELECT DISTINCT series FROM videos'
     ).rows.flatten.compact
   end
 
   # @param [Playlist] playlist
   def record!(playlist)
-    recording = recordings.create!(valid_from: playlist.start_time, channel_id: playlist.channel.id)
+    recordings.create!(valid_from: playlist.start_time, channel_id: playlist.channel.id)
   end
 
   # @return [FFMPEG::Movie] FFMPEG movie
@@ -99,7 +102,8 @@ class Video < ApplicationRecord
 
   def update_tracks
     tracks.each do |track|
-      next if track.playlist && track.playlist.finalized?
+      next if track.playlist&.finalized?
+
       track.title = metadata[:title]
       track.save
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Track < ApplicationRecord
   belongs_to :playlist
   belongs_to :video
@@ -26,7 +28,7 @@ class Track < ApplicationRecord
   after_destroy :renumber_playlist
 
   def length
-    ( video && video.metadata ) ? video.metadata['length'] : 0
+    video&.metadata ? video.metadata['length'] : 0
   end
 
   def stop!
@@ -36,7 +38,7 @@ class Track < ApplicationRecord
   def up!
     return if position <= 1
 
-    oldpos = position.nil? || position == 0 ? 1 : position
+    oldpos = position.nil? || position.zero? ? 1 : position
     prtrack = playlist.tracks.where('tracks.position < ?', oldpos).order(position: 'ASC').last
 
     update_attribute :position, prtrack.position
@@ -46,7 +48,7 @@ class Track < ApplicationRecord
   def down!
     return if position >= playlist.tracks.size
 
-    oldpos = position.nil? || position == 0 ? 1 : position
+    oldpos = position.nil? || position.zero? ? 1 : position
     nxtrack = playlist.tracks.where('tracks.position > ?', oldpos).order(position: 'ASC').first
     update_attribute :position, nxtrack.position
     nxtrack.update_attribute :position, oldpos
@@ -63,7 +65,9 @@ class Track < ApplicationRecord
   private
 
   def playlist_not_finalized
-    errors.add(:base, 'A műsor nem lehet lezárva') if !playlist.blank? && playlist.finalized?
+    if !playlist.blank? && playlist.finalized?
+      errors.add(:base, 'A műsor nem lehet lezárva')
+    end
   end
 
   def initialize_title

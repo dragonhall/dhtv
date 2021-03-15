@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlaylistHasNoTracksError < StandardError; end
 
 class Playlist < ApplicationRecord
@@ -6,16 +8,23 @@ class Playlist < ApplicationRecord
 
   scope :finalized, -> { where(finalized: true) }
   scope :wip, -> { where(finalized: false) }
-  scope :at_today, -> { where('playlists.start_time >= ? AND playlists.start_time <= ?', Time.zone.now.beginning_of_day, Time.zone.now.end_of_day) }
-  scope :at_week, -> { where('playlists.start_time >= ? AND playlists.start_time <= ?', Time.zone.now.beginning_of_week, Time.zone.now.end_of_week) }
+  scope :at_today, lambda {
+    where('playlists.start_time >= ? AND playlists.start_time <= ?',
+          Time.zone.now.beginning_of_day, Time.zone.now.end_of_day)
+  }
+  scope :at_week, lambda {
+    where('playlists.start_time >= ? AND playlists.start_time <= ?',
+          Time.zone.now.beginning_of_week, Time.zone.now.end_of_week)
+  }
 
-  # scope :active, -> { where ('playlists.start_time <= NOW() AND playlists.start_time + INTERVAL playlists.duration SECOND != NOW()') }
   scope :active, -> { joins(:tracks).where('tracks.playing = ?', true) }
   scope :upcoming, -> { where(finalized: true) }
-  scope :current, -> { where('playlists.start_time BETWEEN ? AND ?', Time.zone.now.beginning_of_week, Time.zone.now.end_of_week) }
+  scope :current, lambda {
+    where('playlists.start_time BETWEEN ? AND ?',
+          Time.zone.now.beginning_of_week, Time.zone.now.end_of_week)
+  }
 
   default_scope -> { includes(:tracks).order(start_time: 'ASC') }
-
 
   validates_presence_of :title
   validates_presence_of :start_time
@@ -29,7 +38,7 @@ class Playlist < ApplicationRecord
   end
 
   def finalize!
-    if tracks.count > 0 then
+    if tracks.count.positive?
       update_attribute :finalized, true
     else
       raise PlaylistHasNoTracksError, 'No tracks added to the tracklist'
@@ -55,9 +64,7 @@ class Playlist < ApplicationRecord
 
   def renumber!
     tracks.each_with_index do |track, index|
-      if track.position != index then
-        track.update_attribute :position, index
-      end
+      track.update_attribute :position, index if track.position != index
     end
   end
 
@@ -68,10 +75,10 @@ class Playlist < ApplicationRecord
   def clone_to_technical
     unless Channel.where(domain: '#technical').any?
       Channel.create(
-          name: 'Technical channel',
-          domain: '#technical',
-          stream_path: 'dragonhall_teszt',
-          icon: nil, logo: nil
+        name: 'Technical channel',
+        domain: '#technical',
+        stream_path: 'dragonhall_teszt',
+        icon: nil, logo: nil
       )
     end
 
@@ -80,8 +87,8 @@ class Playlist < ApplicationRecord
       self
     else
       new_playlist = Channel.where(domain: '#technical').first.playlists.create(
-          title: "Playlist##{id}",
-          start_time: 1.minutes.from_now
+        title: "Playlist##{id}",
+        start_time: 1.minutes.from_now
       )
 
       tracks.each do |track|
@@ -102,20 +109,22 @@ class Playlist < ApplicationRecord
     Rails.public_dir.join(program_path.sub(%r{^/}, '')).exist?
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def human_title
-    if !defined?(@human_title) or @human_title.blank?
-      @human_title = if start_time.to_date == Time.zone.now.to_date then
+    if !defined?(@human_title) || @human_title.blank?
+      @human_title = if start_time.to_date == Time.zone.now.to_date
                        'Mai'
-                     elsif start_time.to_date == (Time.zone.now - 1.day).to_date then
+                     elsif start_time.to_date == (Time.zone.now - 1.day).to_date
                        'Tegnapi'
-                     elsif start_time.to_date == (Time.zone.now + 1.day).to_date then
+                     elsif start_time.to_date == (Time.zone.now + 1.day).to_date
                        'Holnapi'
                      elsif start_time >= Time.zone.now.to_date.beginning_of_week &&
-                       start_time <= Time.zone.now.to_date.end_of_week then
+                           start_time <= Time.zone.now.to_date.end_of_week
                        # 'Heti'
                        I18n.l(start_time, format: '%Ai').titleize
                      elsif start_time >= 7.days.from_now.to_date.beginning_of_week &&
-                       start_time <= 7.days.from_now.to_date.end_of_week then
+                           start_time <= 7.days.from_now.to_date.end_of_week
                        'Jövő Heti'
                      else
                        start_time > Time.now.end_of_day ? 'Következő' : 'Előző'
@@ -125,15 +134,21 @@ class Playlist < ApplicationRecord
     @human_title
   end
 
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+
   private
 
   def calculate_duration
-    unless self.finalized? or tracks.where(playing: true).any?
+    unless finalized? || tracks.where(playing: true).any?
       self.duration = tracks.collect(&:length).sum
     end
   end
 
   def initialize_title
-    self.title ||= "#{channel ? channel.name : Playlist.model_name} ##{channel.playlists.last.blank? ? 1 : channel.playlists.last.id + 1}" if new_record?
+    if new_record?
+      self.title ||= "#{channel ? channel.name : Playlist.model_name} " \
+                     "##{channel.playlists.last.blank? ? 1 : channel.playlists.last.id + 1}"
+    end
   end
 end

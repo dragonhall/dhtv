@@ -1,5 +1,6 @@
-class RecordingsController < InheritedResources::Base
+# frozen_string_literal: true
 
+class RecordingsController < InheritedResources::Base
   respond_to :json, :html
 
   protected
@@ -10,9 +11,7 @@ class RecordingsController < InheritedResources::Base
 
   private
 
-
-    def recording_params
-      params.require(:recording).permit()
-    end
+  def recording_params
+    params.require(:recording).permit
+  end
 end
-

@@ -1,5 +1,6 @@
-module ApplicationHelper
+# frozen_string_literal: true
 
+module ApplicationHelper
   # @param [String] body
   # @param [String|Array] url
   # @param [Hash] html_options
@@ -12,11 +13,11 @@ module ApplicationHelper
 
     active = false
 
-    if url.is_a?(String) and (url == request.url || url == request.path)
-      STDERR.puts "String match! (#{url} == #{request.url} || #{url} == #{request.url})"
+    if url.is_a?(String) && [request.url, request.path].include?(url)
+      warn "String match! (#{url} == #{request.url} || #{url} == #{request.url})"
       active = true
     elsif url_for(url) == request.url
-      STDERR.puts "url_for match! (url_for(#{url}) == #{request.url})"
+      warn "url_for match! (url_for(#{url}) == #{request.url})"
       active = true
     end
 
