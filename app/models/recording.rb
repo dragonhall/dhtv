@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class Recording < ApplicationRecord
-  scope :available, -> { where('recordings.valid_from <= NOW()').where('recordings.expires_at IS NULL OR recordings.expires_at >= ?', Time.zone.tomorrow.midnight) }
+  scope :available, lambda {
+    where('recordings.valid_from <= NOW()')
+      .where('recordings.expires_at IS NULL OR recordings.expires_at >= ?', Time.zone.tomorrow.midnight)
+  }
 
   default_scope -> { includes(:video).order(valid_from: 'DESC') }
 

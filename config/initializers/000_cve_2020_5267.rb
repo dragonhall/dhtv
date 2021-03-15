@@ -11,6 +11,7 @@ module ActionView::Helpers::JavaScriptHelper
   alias old_ej escape_javascript
   alias old_j j
 
+  # rubocop:disable Style/ConditionalAssignment
   def escape_javascript(javascript)
     javascript = javascript.to_s
     if javascript.empty?
@@ -20,6 +21,7 @@ module ActionView::Helpers::JavaScriptHelper
     end
     javascript.html_safe? ? result.html_safe : result
   end
+  # rubocop:enable Style/ConditionalAssignment
 
   alias j escape_javascript
 end

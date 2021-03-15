@@ -8,13 +8,21 @@ class Playlist < ApplicationRecord
 
   scope :finalized, -> { where(finalized: true) }
   scope :wip, -> { where(finalized: false) }
-  scope :at_today, -> { where('playlists.start_time >= ? AND playlists.start_time <= ?', Time.zone.now.beginning_of_day, Time.zone.now.end_of_day) }
-  scope :at_week, -> { where('playlists.start_time >= ? AND playlists.start_time <= ?', Time.zone.now.beginning_of_week, Time.zone.now.end_of_week) }
+  scope :at_today, lambda {
+    where('playlists.start_time >= ? AND playlists.start_time <= ?',
+          Time.zone.now.beginning_of_day, Time.zone.now.end_of_day)
+  }
+  scope :at_week, lambda {
+    where('playlists.start_time >= ? AND playlists.start_time <= ?',
+          Time.zone.now.beginning_of_week, Time.zone.now.end_of_week)
+  }
 
-  # scope :active, -> { where ('playlists.start_time <= NOW() AND playlists.start_time + INTERVAL playlists.duration SECOND != NOW()') }
   scope :active, -> { joins(:tracks).where('tracks.playing = ?', true) }
   scope :upcoming, -> { where(finalized: true) }
-  scope :current, -> { where('playlists.start_time BETWEEN ? AND ?', Time.zone.now.beginning_of_week, Time.zone.now.end_of_week) }
+  scope :current, lambda {
+    where('playlists.start_time BETWEEN ? AND ?',
+          Time.zone.now.beginning_of_week, Time.zone.now.end_of_week)
+  }
 
   default_scope -> { includes(:tracks).order(start_time: 'ASC') }
 
@@ -30,7 +38,7 @@ class Playlist < ApplicationRecord
   end
 
   def finalize!
-    if tracks.count > 0
+    if tracks.count.positive?
       update_attribute :finalized, true
     else
       raise PlaylistHasNoTracksError, 'No tracks added to the tracklist'
@@ -101,6 +109,8 @@ class Playlist < ApplicationRecord
     Rails.public_dir.join(program_path.sub(%r{^/}, '')).exist?
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def human_title
     if !defined?(@human_title) || @human_title.blank?
       @human_title = if start_time.to_date == Time.zone.now.to_date
@@ -124,6 +134,9 @@ class Playlist < ApplicationRecord
     @human_title
   end
 
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+
   private
 
   def calculate_duration
@@ -134,7 +147,8 @@ class Playlist < ApplicationRecord
 
   def initialize_title
     if new_record?
-      self.title ||= "#{channel ? channel.name : Playlist.model_name} ##{channel.playlists.last.blank? ? 1 : channel.playlists.last.id + 1}"
+      self.title ||= "#{channel ? channel.name : Playlist.model_name} " \
+                     "##{channel.playlists.last.blank? ? 1 : channel.playlists.last.id + 1}"
     end
   end
 end

@@ -11,6 +11,7 @@ class TracksController < InheritedResources::Base
 
   # skip_before_action :authenticate_admin!, only: :index
 
+  # rubocop:disable Metrics/AbcSize
   def current
     active_track = Rails.cache.fetch('active_track', expires_in: 30.seconds) do
       if Track.where(playing: true).joins(:playlist)
@@ -36,6 +37,7 @@ class TracksController < InheritedResources::Base
       render json: track_json, status: :ok
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 

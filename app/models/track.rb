@@ -38,7 +38,7 @@ class Track < ApplicationRecord
   def up!
     return if position <= 1
 
-    oldpos = position.nil? || position == 0 ? 1 : position
+    oldpos = position.nil? || position.zero? ? 1 : position
     prtrack = playlist.tracks.where('tracks.position < ?', oldpos).order(position: 'ASC').last
 
     update_attribute :position, prtrack.position
@@ -48,7 +48,7 @@ class Track < ApplicationRecord
   def down!
     return if position >= playlist.tracks.size
 
-    oldpos = position.nil? || position == 0 ? 1 : position
+    oldpos = position.nil? || position.zero? ? 1 : position
     nxtrack = playlist.tracks.where('tracks.position > ?', oldpos).order(position: 'ASC').first
     update_attribute :position, nxtrack.position
     nxtrack.update_attribute :position, oldpos

@@ -85,7 +85,7 @@ class Video < ApplicationRecord
 
   # @param [Playlist] playlist
   def record!(playlist)
-    recording = recordings.create!(valid_from: playlist.start_time, channel_id: playlist.channel.id)
+    recordings.create!(valid_from: playlist.start_time, channel_id: playlist.channel.id)
   end
 
   # @return [FFMPEG::Movie] FFMPEG movie

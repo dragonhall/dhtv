@@ -13,7 +13,7 @@ module ApplicationHelper
 
     active = false
 
-    if url.is_a?(String) && (url == request.url || url == request.path)
+    if url.is_a?(String) && [request.url, request.path].include?(url)
       warn "String match! (#{url} == #{request.url} || #{url} == #{request.url})"
       active = true
     elsif url_for(url) == request.url

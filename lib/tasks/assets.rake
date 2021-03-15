@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Lint/UselessAssignment
 namespace :assets do
   desc 'Create soft links for non-digested assets'
   task soft_links: 'assets:precompile' do
@@ -8,7 +9,7 @@ namespace :assets do
     manifest_path = Dir.glob(Rails.root.join('public/assets/**/.sprockets-manifest-*.json')).first
 
     if manifest_path
-      manifest_data = JSON.load(File.new(manifest_path))
+      manifest_data = JSON.parse(File.read(manifest_path))
       assets_data = manifest_data['assets'].each do |asset_name, file_name|
         file_path = Rails.root.join('public/assets', file_name).to_s
         asset_path = Rails.root.join('public/assets', asset_name).to_s
@@ -17,3 +18,4 @@ namespace :assets do
     end
   end
 end
+# rubocop:enable Lint/UselessAssignment
