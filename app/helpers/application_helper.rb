@@ -5,11 +5,8 @@ module ApplicationHelper
   # @param [String|Array] url
   # @param [Hash] html_options
   def navbar_item_link_to(body, url, html_options = {})
-    if html_options.key?(:class)
-      html_options[:class] << ' navbar-item'
-    else
-      html_options[:class] = 'navbar-item'
-    end
+    html_options[:class] ||= ''.dup
+    html_options[:class] << ' navbar-item'
 
     active = false
 
