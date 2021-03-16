@@ -7,7 +7,7 @@ class JsonWithIndifferentAccessSerializer
   end
 
   def self.load(json)
-    obj = HashWithIndifferentAccess.new(JSON.parse(json))
+    obj = HashWithIndifferentAccess.new(JSON.parse(json.to_s))
     # obj.freeze
     obj
   end
