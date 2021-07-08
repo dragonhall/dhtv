@@ -70,7 +70,7 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails', '>= 1.5.0', require: false
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'rubocop'
