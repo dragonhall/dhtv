@@ -2,7 +2,7 @@
   "name": "dhtv",
   "private": true,
   "dependencies": {
-    "@videojs/themes": "^1.0.0",
+    "@videojs/themes": "^1.0.1",
     "hls.js": "^0.12.4",
     "jquery-migrate": "^3.1.0",
     "jquery-mobile": "^1.4.0",
