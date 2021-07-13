@@ -25,7 +25,7 @@ end
 
 gem 'mysql2', '>= 0.3.18'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'puma', '3.12.6'
+gem 'puma', '5.3.2'
 gem 'rails', '~> 5.1'
 
 group :assets do
