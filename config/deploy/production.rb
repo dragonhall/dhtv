@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 server '87.229.7.176', user: 'showtime', roles: %w[app db web], port: 15_412
+server '79.172.195.48', user: 'showtime', roles: %w[app db web], port: 22
 
 set :branch, ENV.fetch('DEPLOY_BRANCH') { 'master' }.to_sym
 
