@@ -26,7 +26,7 @@ end
 gem 'mysql2', '>= 0.3.18'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'puma', '5.5.1'
-gem 'rails', '~> 5.1'
+gem 'rails', '~> 5.2'
 
 group :assets do
   gem 'bulma-rails'
@@ -88,6 +88,7 @@ group :application do
   gem 'rollbar'
   # gem 'simple_form'
 
-  gem 'ads-rails'
+  ## Removed by Rails 5.2 upgrade
+  # gem 'ads-rails'
   gem 'google-analytics-rails'
 end
