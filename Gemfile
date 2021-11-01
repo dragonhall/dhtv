@@ -49,7 +49,7 @@ end
 group :development do
   gem 'capistrano-linked-files', require: false
   gem 'capistrano-rails', require: false
-  gem 'capistrano3-puma', require: false
+  gem 'capistrano3-puma', '>= 5.0.4', require: false
   gem 'rvm1-capistrano3', require: false
 
   gem 'fuubar'
