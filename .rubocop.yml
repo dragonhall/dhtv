@@ -65,6 +65,10 @@ Metrics/PerceivedComplexity:
     - app/controllers/tv_controller.rb
     - app/helpers/application_helper.rb
 
+Security/JSONLoad:
+  Exclude:
+    - app/serializers/json_with_indifferent_access_serializer.rb
+
 AllCops:
   Exclude:
     - db/schema.rb

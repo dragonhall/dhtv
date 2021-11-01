@@ -21,6 +21,9 @@ class TracksController < InheritedResources::Base
       end
     end
 
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Cache-Control'] = 'no-store, max-age=0'
+
     if active_track.nil?
       render json: { error: 'No active track' }, status: 404
     else
@@ -33,7 +36,6 @@ class TracksController < InheritedResources::Base
         category: active_track.video.video_type.to_s.titleize,
         length: Time.at(active_track.length).utc.strftime('%H:%M:%S')
       }
-      response.headers['Access-Control-Allow-Origin'] = '*'
       render json: track_json, status: :ok
     end
   end
