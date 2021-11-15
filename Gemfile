@@ -47,9 +47,9 @@ group :development, :test do
 end
 
 group :development do
+  gem 'capistrano3-puma', require: false
   gem 'capistrano-linked-files', require: false
   gem 'capistrano-rails', require: false
-  gem 'capistrano3-puma', require: false
   gem 'rvm1-capistrano3', require: false
 
   gem 'fuubar'
@@ -67,6 +67,8 @@ group :development do
         cucumber: :latest,
         bundler: :latest,
         rake: :latest
+
+  gem 'ruboclean', require: false
 end
 
 group :test do

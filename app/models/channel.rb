@@ -16,7 +16,7 @@ class Channel < ApplicationRecord
   after_create :permit_fulladmins
 
   def url
-    'http:// ' + domain
+    "http:// #{domain}"
   end
 
   private

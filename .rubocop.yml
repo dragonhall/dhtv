@@ -1,75 +1,207 @@
-#require: 
-#  - rubocop-rspec
+---
 
-Layout/LineLength:
-  Max: 128
+AllCops:
+  Exclude:
+  - db/schema.rb
+  - bin/*
 
-Metrics/MethodLength:
-  Max: 25
-Metrics/ClassLength:
-  Max: 128
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/CommandLiteral:
-  Enabled: false
-
-Style/MultilineIfThen:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: false
+Gemspec/DateAssignment:
+  Enabled: true
 
 Layout/FirstArgumentIndentation:
   Enabled: false
 
-Style/IfUnlessModifier:
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 128
+
+Layout/SpaceBeforeBrackets:
+  Enabled: true
+
+Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
+
+Lint/AmbiguousAssignment:
+  Enabled: true
+
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
+
+Lint/AmbiguousRange:
+  Enabled: true
+
+Lint/DeprecatedConstants:
+  Enabled: true
+
+Lint/DuplicateBranch:
+  Enabled: true
+
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+
+Lint/EmptyBlock:
+  Enabled: true
+
+Lint/EmptyClass:
+  Enabled: true
+
+Lint/EmptyInPattern:
+  Enabled: true
+
+Lint/IncompatibleIoSelectWithFiberScheduler:
+  Enabled: true
+
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: true
+
+Lint/NumberedParameterAssignment:
+  Enabled: true
+
+Lint/OrAssignmentToConstant:
+  Enabled: true
+
+Lint/RedundantDirGlobSort:
+  Enabled: true
+
+Lint/RequireRelativeSelfPath:
+  Enabled: true
 
 Lint/SuppressedException:
   Exclude:
-    - spec/support/*.rb
+  - spec/support/*.rb
 
-Style/Documentation:
-  Exclude:
-    - config/**/*
-    - spec/**/*
-    - test/**/*
-    - features/**/*
-    - app/controllers/**/*
-    - app/models/**/*
-    - app/mailers/**/*
-    - app/helpers/**/*
-    - app/controllers/**/*
-    - app/jobs/**/*
+Lint/SymbolConversion:
+  Enabled: true
+
+Lint/ToEnumArguments:
+  Enabled: true
+
+Lint/TripleQuotes:
+  Enabled: true
+
+Lint/UnexpectedBlockArity:
+  Enabled: true
+
+Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
 
 Metrics/AbcSize:
   Exclude:
-    - app/controllers/tv_controller.rb
-    - app/helpers/application_helper.rb
-    - app/controllers/playlists_controller.rb
-    - app/models/track.rb
-    - app/models/playlist.rb
+  - app/controllers/tv_controller.rb
+  - app/helpers/application_helper.rb
+  - app/controllers/playlists_controller.rb
+  - app/models/track.rb
+  - app/models/playlist.rb
+
+Metrics/ClassLength:
+  Max: 128
 
 Metrics/CyclomaticComplexity:
   Exclude:
-    - app/controllers/tv_controller.rb
-    - app/helpers/application_helper.rb
+  - app/controllers/tv_controller.rb
+  - app/helpers/application_helper.rb
+
+Metrics/MethodLength:
+  Max: 25
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - app/controllers/tv_controller.rb
-    - app/helpers/application_helper.rb
+  - app/controllers/tv_controller.rb
+  - app/helpers/application_helper.rb
+
+Security/IoMethods:
+  Enabled: true
 
 Security/JSONLoad:
   Exclude:
-    - app/serializers/json_with_indifferent_access_serializer.rb
+  - app/serializers/json_with_indifferent_access_serializer.rb
 
-AllCops:
+Style/ArgumentsForwarding:
+  Enabled: true
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/CollectionCompact:
+  Enabled: true
+
+Style/CommandLiteral:
+  Enabled: false
+
+Style/DocumentDynamicEvalDefinition:
+  Enabled: true
+
+Style/Documentation:
   Exclude:
-    - db/schema.rb
-    - bin/*
+  - config/**/*
+  - spec/**/*
+  - test/**/*
+  - features/**/*
+  - app/controllers/**/*
+  - app/models/**/*
+  - app/mailers/**/*
+  - app/helpers/**/*
+  - app/controllers/**/*
+  - app/jobs/**/*
+
+Style/EndlessMethod:
+  Enabled: true
+
+Style/GuardClause:
+  Enabled: false
+
+Style/HashConversion:
+  Enabled: true
+
+Style/HashExcept:
+  Enabled: true
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+
+Style/InPatternThen:
+  Enabled: true
+
+Style/MultilineIfThen:
+  Enabled: false
+
+Style/MultilineInPatternThen:
+  Enabled: true
+
+Style/NegatedIfElseCondition:
+  Enabled: true
+
+Style/NilLambda:
+  Enabled: true
+
+Style/NumberedParameters:
+  Enabled: true
+
+Style/NumberedParametersLimit:
+  Enabled: true
+
+Style/QuotedSymbols:
+  Enabled: true
+
+Style/RedundantArgument:
+  Enabled: true
+
+Style/RedundantSelfAssignmentBranch:
+  Enabled: true
+
+Style/SelectByRegexp:
+  Enabled: true
+
+Style/StringChars:
+  Enabled: true
+
+Style/SwapValues:
+  Enabled: true
