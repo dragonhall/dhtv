@@ -26,7 +26,7 @@ end
 gem 'mysql2', '>= 0.3.18'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'puma', '5.6.2'
-gem 'rails', '~> 5.2', '>= 5.2.6.2'
+gem 'rails', '~> 5.1', '>= 5.1.7'
 
 group :assets do
   gem 'bulma-rails'
@@ -70,7 +70,7 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', '>= 1.6.0', require: false
+  gem 'cucumber-rails', '>= 1.5.0', require: false
   gem 'factory_girl_rails', '>= 4.8.0'
   gem 'rspec-rails', '>= 3.6.1'
   gem 'rubocop'
