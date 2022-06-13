@@ -28,16 +28,16 @@ gem 'mysql2', '>= 0.3.18'
 gem 'puma', '5.6.2'
 
 
-gem 'rails', '~> 5.2', '>= 5.2.6.2'
+gem 'rails', '~> 5.2', '>= 5.2.7.1'
 
 group :assets do
   gem 'bulma-rails'
   gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
-  gem 'font-awesome-rails', '>= 4.7.0.4'
-  gem 'jbuilder', '~> 2.5'
+  gem 'font-awesome-rails', '>= 4.7.0.8'
+  gem 'jbuilder', '~> 2.11', '>= 2.11.5'
   # gem 'jquery-rails'
   gem 'jquery-ui-rails', '>= 6.0.1'
-  gem 'sass-rails', '~> 5.0', '>= 5.0.6'
+  gem 'sass-rails', '~> 5.1', '>= 5.1.0'
   gem 'uglifier', '>= 1.3.0'
 end
 
@@ -55,13 +55,13 @@ group :development do
   gem 'rvm1-capistrano3', require: false
 
   gem 'fuubar'
-  gem 'meta_request', '>= 0.5.0'
+  gem 'meta_request', '>= 0.7.3'
   gem 'pry-rails'
   # Spring speeds up development by keeping your application
   # running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'web-console', '>= 3.5.1'
+  gem 'web-console', '>= 3.7.0'
 
   guard rails: :latest,
         spring: :latest,
@@ -72,9 +72,9 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', '>= 1.6.0', require: false
-  gem 'factory_girl_rails', '>= 4.8.0'
-  gem 'rspec-rails', '>= 3.6.1'
+  gem 'cucumber-rails', '>= 2.5.1', require: false
+  gem 'factory_girl_rails', '>= 4.9.0'
+  gem 'rspec-rails', '>= 5.1.2'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'simplecov'
@@ -83,10 +83,10 @@ end
 group :application do
   gem 'dalli'
   gem 'haml-rails', '>= 2.0.1'
-  gem 'inherited_resources', '>= 1.9.0'
+  gem 'inherited_resources', '>= 1.13.1'
   gem 'kaminari'
 
-  gem 'rails-i18n', '>= 5.0.4'
+  gem 'rails-i18n', '>= 5.1.3'
   gem 'rollbar'
   # gem 'simple_form'
 
