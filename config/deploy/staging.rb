@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-server '87.229.7.176', user: 'showtime', roles: %w[app db web], port: 15_412
+server 'szeroka.dragonhall.hu', user: 'showtime', roles: %w[app db web], port: 15_412
 
 set :nginx_sites_available_path, '/opt/nginx-with-rtmp/conf/sites-available'
 set :nginx_sites_enabled_path, '/opt/nginx-with-rtmp/conf/sites-enabled'
