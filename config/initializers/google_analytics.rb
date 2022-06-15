@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-GA.tracker = 'UA-103621196-1' if Rails.env.production? || Rails.env.staging?
+GA.tracker = 'G-ERF9WTV7ZC' if Rails.env.production? || Rails.env.staging?
