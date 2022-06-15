@@ -147,9 +147,12 @@ jQuery ->
     e.preventDefault()
     e.stopPropagation()
     $('#legal_modal .modal-card-title').text('DragonHall+ TV - Mindent a támogatásról')
-    $('#legal_modal .modal-card-body').load('/tip.html main')
-    $('#legal_modal .modal-card-body > footer').remove()
-    $('#legal_modal').addClass('is-active').show()
+#    $('#legal_modal .modal-card-body').load('/tip.html main')
+#    $('#legal_modal .modal-card-body > footer').remove()
+    $('#legal_modal .modal-card-body').html('<iframe width="100%" style="min-height: 750px;" border="0"></iframe>')
+    $('#legal_modal .modal-card-body > iframe').attr('src', 'https://tamogatas.dragonhall.hu/fika.php')
+    $('#legal_modal .modal-card-body > iframe').on 'load', (e) ->
+      $('#legal_modal').addClass('is-active').show()
 
   $('#tabTV').on 'click', (e) ->
     e.preventDefault()

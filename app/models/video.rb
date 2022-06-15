@@ -50,7 +50,7 @@ class Video < ApplicationRecord
       ["#{rating.to_s.sub(/^pegi_/, '')}+", i]
     end
 
-    @pegi_rating_titles = Hash[v]
+    @pegi_rating_titles = v.to_h
   end
 
   def pegi_rating_i
@@ -58,7 +58,7 @@ class Video < ApplicationRecord
   end
 
   def pegi_rating_s
-    pegi_rating.to_s.sub(/^pegi_/, '') + '+'
+    "#{pegi_rating.to_s.sub(/^pegi_/, '')}+"
   end
 
   def pegi_icon
@@ -73,7 +73,7 @@ class Video < ApplicationRecord
       v << [r.sub('+', '').to_i, "/pegi_rating/#{r.sub('+', '')}.png"]
     end
 
-    Hash[v]
+    v.to_h
   end
 
   # @return [Array]
