@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # config valid only for current version of Capistrano
-lock '~> 3.16.0'
+lock '~> 3.17.0'
 
 set :application, 'dhtv'
 set :repo_url, 'git@github.com:dragonhall/dhtv.git'
