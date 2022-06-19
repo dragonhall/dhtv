@@ -24,6 +24,19 @@
         swf: "#{asset_path('flowplayer.swf')}"
       }
 
+    - if GoogleAnalytics.valid_tracker?
+      = analytics_init 
+      %script{async: true, src: "https://www.googletagmanager.com/gtag/js?id=#{GA.tracker}"}
+      %script
+        const ga_tracker_id = "#{GA.tracker}"
+        :javascript
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', ga_tracker_id);
   %body
     -# TODO create helpers for these awful things. fa_icon, navbar_item_link_to, etc.
     %nav.navbar
@@ -61,16 +74,3 @@
         %footer.modal-card-foot
           %button.button.is-success Megértettem
     = javascript_include_tag :application
-    - if GoogleAnalytics.valid_tracker?
-      = analytics_init 
-      %script{async: true, src: "https://www.googletagmanager.com/gtag/js?id=#{GA.tracker}"}
-      %script
-        const ga_tracker_id = "#{GA.tracker}"
-        :javascript
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-
-            gtag('config', ga_tracker_id);
