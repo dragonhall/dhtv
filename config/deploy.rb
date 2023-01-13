@@ -11,7 +11,7 @@ set :repo_url, 'git@github.com:dragonhall/dhtv.git'
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
-set :deploy_to, '/srv/www/tv.dragonhall.hu/htdocs'
+set :deploy_to, '/srv/www/tv.dragonhall.hu'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
