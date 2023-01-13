@@ -82,7 +82,7 @@ group :test do
 end
 
 group :application do
-  gem 'dalli'
+  gem 'dalli', '>= 3.2.3'
   gem 'haml-rails', '>= 2.0.1'
   gem 'inherited_resources', '>= 1.13.1'
   gem 'kaminari'
