@@ -29,7 +29,7 @@ gem 'puma', '5.6.4'
 
 
 # gem 'rails', '~> 5.2', '>= 5.2.7.1'
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 6.1', '>= 6.1.7'
 
 group :assets do
   gem 'bulma-rails'
