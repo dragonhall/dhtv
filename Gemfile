@@ -28,7 +28,8 @@ gem 'mysql2', '>= 0.3.18'
 gem 'puma', '5.6.4'
 
 
-gem 'rails', '~> 5.2', '>= 5.2.7.1'
+# gem 'rails', '~> 5.2', '>= 5.2.7.1'
+gem 'rails', '~> 6.0'
 
 group :assets do
   gem 'bulma-rails'
@@ -90,6 +91,6 @@ group :application do
   gem 'rollbar'
   # gem 'simple_form'
 
-  gem 'ads-rails', '>= 5.1.0'
+  # gem 'ads-rails', '>= 5.1.0'
   gem 'google-analytics-rails'
 end
