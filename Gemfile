@@ -62,7 +62,7 @@ group :development do
   # running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'web-console', '>= 3.7.0'
+  gem 'web-console', '>= 4.2.0'
 
   guard rails: :latest,
         spring: :latest,
@@ -73,9 +73,9 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', '>= 2.5.1', require: false
+  gem 'cucumber-rails', '>= 2.6.1', require: false
   gem 'factory_girl_rails', '>= 4.9.0'
-  gem 'rspec-rails', '>= 5.1.2'
+  gem 'rspec-rails', '>= 6.0.1'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'simplecov'
@@ -83,11 +83,11 @@ end
 
 group :application do
   gem 'dalli', '>= 3.2.3'
-  gem 'haml-rails', '>= 2.0.1'
+  gem 'haml-rails', '>= 2.1.0'
   gem 'inherited_resources', '>= 1.13.1'
   gem 'kaminari'
 
-  gem 'rails-i18n', '>= 5.1.3'
+  gem 'rails-i18n', '>= 7.0.6'
   gem 'rollbar'
   # gem 'simple_form'
 
