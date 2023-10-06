@@ -29,16 +29,16 @@ gem 'puma', '5.6.4'
 
 
 # gem 'rails', '~> 5.2', '>= 5.2.7.1'
-gem 'rails', '~> 6.1', '>= 6.1.7'
+gem 'rails', '~> 7.1', '>= 7.1.0'
 
 group :assets do
   gem 'bulma-rails'
-  gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
+  gem 'coffee-rails', '~> 5.0', '>= 5.0.0'
   gem 'font-awesome-rails', '>= 4.7.0.8'
   gem 'jbuilder', '~> 2.11', '>= 2.11.5'
   # gem 'jquery-rails'
   gem 'jquery-ui-rails', '>= 6.0.1'
-  gem 'sass-rails', '~> 5.1', '>= 5.1.0'
+  gem 'sass-rails', '~> 6.0', '>= 6.0.0'
   gem 'uglifier', '>= 1.3.0'
 end
 
@@ -62,7 +62,7 @@ group :development do
   # running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'web-console', '>= 3.7.0'
+  gem 'web-console', '>= 4.2.1'
 
   guard rails: :latest,
         spring: :latest,
@@ -75,7 +75,7 @@ end
 group :test do
   gem 'cucumber-rails', '>= 2.5.1', require: false
   gem 'factory_girl_rails', '>= 4.9.0'
-  gem 'rspec-rails', '>= 5.1.2'
+  gem 'rspec-rails', '>= 6.0.2'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'simplecov'
@@ -87,7 +87,7 @@ group :application do
   gem 'inherited_resources', '>= 1.13.1'
   gem 'kaminari'
 
-  gem 'rails-i18n', '>= 5.1.3'
+  gem 'rails-i18n', '>= 7.0.7'
   gem 'rollbar'
   # gem 'simple_form'
 
