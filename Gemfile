@@ -84,7 +84,7 @@ end
 group :application do
   gem 'dalli', '>= 3.2.3'
   gem 'haml-rails', '>= 2.0.1'
-  gem 'inherited_resources', '>= 1.13.1'
+  gem 'inherited_resources', '>= 1.14.0'
   gem 'kaminari'
 
   gem 'rails-i18n', '>= 5.1.3'
