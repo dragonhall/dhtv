@@ -35,7 +35,7 @@ group :assets do
   gem 'bulma-rails'
   gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
   gem 'font-awesome-rails', '>= 4.7.0.8'
-  gem 'jbuilder', '~> 2.11', '>= 2.11.5'
+  gem 'jbuilder', '~> 2.12', '>= 2.12.0'
   # gem 'jquery-rails'
   gem 'jquery-ui-rails', '>= 6.0.1'
   gem 'sass-rails', '~> 5.1', '>= 5.1.0'
