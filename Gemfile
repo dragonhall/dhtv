@@ -56,7 +56,7 @@ group :development do
   gem 'rvm1-capistrano3', require: false
 
   gem 'fuubar'
-  gem 'meta_request', '>= 0.7.3'
+  gem 'meta_request', '>= 0.7.4'
   gem 'pry-rails'
   # Spring speeds up development by keeping your application
   # running in the background. Read more: https://github.com/rails/spring
