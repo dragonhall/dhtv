@@ -57,6 +57,7 @@
               = navbar_item_link_to faw_icon('film', text: 'Videótár'), recordings_url
             = navbar_item_link_to faw_icon('television', text: 'TV'), root_url
             = navbar_item_link_to (content_tag(:span, image_tag('tip.png'), class: 'icon') + content_tag(:span, 'Támogatási infók', class: 'has-text-info')), '#', class: 'tip-support'
+            = navbar_item_link_to faw_icon('newspaper', text: 'Műsorújság'), 'https://dragonhall.hu/dhtvmusor.php'
           .navbar-end
             = navbar_item_link_to content_tag(:span, image_tag('gyik.png'), class: 'icon'), '#', class: 'faq'
             = navbar_item_link_to content_tag(:span, '&sect;'.html_safe, class: 'icon', style: 'font-size: 21px; font-weight: bold;'), '#', class: 'legalcode'
