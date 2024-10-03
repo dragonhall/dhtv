@@ -61,7 +61,11 @@ group :development do
   # running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-commands-rspec'
+<<<<<<< HEAD
   gem 'web-console', '>= 4.2.1'
+=======
+  gem 'web-console', '>= 4.2.0'
+>>>>>>> snyk-fix-11eb25d055c5776f77b9967f40562285
 
   guard rails: :latest,
         spring: :latest,
@@ -72,9 +76,15 @@ group :development do
 end
 
 group :test do
+<<<<<<< HEAD
   gem 'cucumber-rails', '>= 3.0.0', require: false
   gem 'factory_girl_rails', '>= 4.9.0'
   gem 'rspec-rails', '>= 6.0.2'
+=======
+  gem 'cucumber-rails', '>= 2.6.1', require: false
+  gem 'factory_girl_rails', '>= 4.9.0'
+  gem 'rspec-rails', '>= 6.0.1'
+>>>>>>> snyk-fix-11eb25d055c5776f77b9967f40562285
   gem 'rubocop'
   gem 'rubocop-rails', '>= 2.18.0'
   gem 'simplecov'
