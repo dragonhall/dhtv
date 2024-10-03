@@ -72,7 +72,7 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', '>= 2.6.1', require: false
+  gem 'cucumber-rails', '>= 3.0.0', require: false
   gem 'factory_girl_rails', '>= 4.9.0'
   gem 'rspec-rails', '>= 6.0.1'
   gem 'rubocop'
