@@ -28,8 +28,7 @@ gem 'mysql2', '>= 0.3.18'
 gem 'puma', '5.6.4'
 
 
-# gem 'rails', '~> 5.2', '>= 5.2.7.1'
-gem 'rails', '~> 7.0', '>= 7.0.8.1'
+gem 'rails', '~> 6.1', '>= 6.1.7.3'
 
 group :assets do
   gem 'bulma-rails'
@@ -37,7 +36,7 @@ group :assets do
   gem 'font-awesome-rails', '>= 4.7.0.8'
   gem 'jbuilder', '~> 2.11', '>= 2.11.5'
   # gem 'jquery-rails'
-  gem 'jquery-ui-rails', '>= 7.0.0'
+  gem 'jquery-ui-rails'
   gem 'sass-rails', '~> 6.0', '>= 6.0.0'
   gem 'uglifier', '>= 1.3.0'
 end
@@ -83,11 +82,11 @@ end
 
 group :application do
   gem 'dalli', '>= 3.2.3'
-  gem 'haml-rails', '>= 2.0.1'
-  gem 'inherited_resources', '>= 1.14.0'
+  gem 'haml-rails', '>= 2.1.0'
+  gem 'inherited_resources', '>= 1.13.1'
   gem 'kaminari'
 
-  gem 'rails-i18n', '>= 7.0.7'
+  gem 'rails-i18n', '>= 7.0.6'
   gem 'rollbar'
   # gem 'simple_form'
 
