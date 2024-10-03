@@ -5,7 +5,7 @@ server 'szeroka.dragonhall.hu', user: 'showtime', roles: %w[app db web], port: 1
 set :nginx_sites_available_path, '/opt/nginx-with-rtmp/conf/sites-available'
 set :nginx_sites_enabled_path, '/opt/nginx-with-rtmp/conf/sites-enabled'
 
-set :deploy_to, '/srv/www/tv.teszt.dragonhall.hu/htdocs'
+set :deploy_to, '/srv/www/tv.teszt.dragonhall.hu'
 set :nginx_server_name, 'tv.teszt.dragonhall.hu'
 set :branch, ENV.fetch('DEPLOY_BRANCH', 'develop').to_sym
 
