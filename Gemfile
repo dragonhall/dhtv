@@ -74,7 +74,8 @@ group :test do
   gem 'cucumber-rails', '>= 3.0.0', require: false
   gem 'factory_girl_rails', '>= 4.9.0'
   gem 'rspec-rails', '>= 6.0.1'
-  gem 'rubocop'
+  gem 'rspec_junit_formatter', require: false
+  gem 'rubocop', require: false
   gem 'rubocop-rails'
   gem 'simplecov'
 end

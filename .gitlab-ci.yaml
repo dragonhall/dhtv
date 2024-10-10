@@ -1,0 +1,50 @@
+stages:
+  - test
+  - deploy
+
+runGrype:
+  stage: test
+  image: anchore/grype:debug
+  script: |
+    mkdir -p tmp
+    /grype -o template --template .grype/junit.tmpl --exclude './tmp/**' --exclude='./log/**' -vv . > tmp/grype-results.xml
+  artifacts:
+    reports:
+      junit: tmp/grype-results.xml
+    when: always
+  allow_failure: true
+  only:
+    - master
+    - develop
+
+runTests:
+  stage: test
+  image: ruby:3.1.0
+  cache:
+    - key:
+        files:
+          - Gemfile.lock
+      paths:
+        - vendor/ruby
+    - key:
+        files:
+          - yarn.lock
+      paths:
+        - node_modules
+        - .yarn-cache
+  script:
+    - bundle config set --local path 'vendor/ruby'
+    - bundle install
+    - yarn install --cache-folder .yarn-cache
+    - mkdir -p tmp
+    - bundle exec rubocop -f junit -o tmp/rubocop-results.xml
+    - bundle exec rspec --format RspecJunitFormatter --out tmp/rspec-results.xml
+  artifacts:
+    reports:
+      junit: 
+        - tmp/rubocop-results.xml
+        - tmp/rspec-results.xml
+    when: always
+  except:
+    - tags
+  when: manual
