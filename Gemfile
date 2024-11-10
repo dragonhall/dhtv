@@ -86,7 +86,7 @@ group :application do
   gem 'inherited_resources', '>= 1.13.1'
   gem 'kaminari'
 
-  gem 'rails-i18n', '>= 7.0.6'
+  gem 'rails-i18n', '>= 8.0.0'
   gem 'rollbar'
   # gem 'simple_form'
 
