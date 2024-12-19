@@ -28,7 +28,7 @@ gem 'mysql2', '>= 0.3.18'
 gem 'puma', '~> 5.6.4'
 
 
-gem 'rails', '~> 6.1', '>= 6.1.7'
+gem 'rails', '~> 7.0', '>= 7.0.8.7'
 
 group :assets do
   gem 'bulma-rails'
@@ -37,7 +37,7 @@ group :assets do
   gem 'jbuilder', '~> 2.11', '>= 2.11.5'
   # gem 'jquery-rails'
   gem 'jquery-ui-rails', '>= 6.0.1'
-  gem 'sass-rails', '~> 5.1', '>= 5.1.0'
+  gem 'sass-rails', '~> 6.0', '>= 6.0.0'
   gem 'uglifier', '>= 1.3.0'
 end
 
