@@ -13,7 +13,7 @@ git_source(:bitbucket) do |repo_name|
 end
 
 def guard(plugins = {})
-  gem 'guard'
+  gem 'guard', '>= 2.18.1'
   plugins.each_pair do |name, version|
     if version == :latest
       gem "guard-#{name}", require: false
@@ -28,16 +28,16 @@ gem 'mysql2', '>= 0.3.18'
 gem 'puma', '~> 5.6.4'
 
 
-gem 'rails', '~> 6.1', '>= 6.1.7'
+gem 'rails', '~> 6.1', '>= 6.1.7.10'
 
 group :assets do
   gem 'bulma-rails'
-  gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
-  gem 'font-awesome-rails', '>= 4.7.0.8'
+  gem 'coffee-rails', '~> 5.0', '>= 5.0.0'
+  gem 'font-awesome-rails', '>= 4.7.0.9'
   gem 'jbuilder', '~> 2.11', '>= 2.11.5'
   # gem 'jquery-rails'
-  gem 'jquery-ui-rails', '>= 6.0.1'
-  gem 'sass-rails', '~> 5.1', '>= 5.1.0'
+  gem 'jquery-ui-rails', '>= 8.0.0'
+  gem 'sass-rails', '~> 6.0', '>= 6.0.0'
   gem 'uglifier', '>= 1.3.0'
 end
 
@@ -55,13 +55,13 @@ group :development do
   gem 'rvm1-capistrano3', require: false
 
   gem 'fuubar'
-  gem 'meta_request', '>= 0.7.3'
+  gem 'meta_request', '>= 0.8.4'
   gem 'pry-rails'
   # Spring speeds up development by keeping your application
   # running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'web-console', '>= 4.2.0'
+  gem 'web-console', '>= 4.2.1'
 
   guard rails: :latest,
         spring: :latest,
@@ -72,9 +72,9 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber-rails', '>= 3.0.0', require: false
+  gem 'cucumber-rails', '>= 3.0.1', require: false
   gem 'factory_girl_rails', '>= 4.9.0'
-  gem 'rspec-rails', '>= 6.0.1'
+  gem 'rspec-rails', '>= 6.0.2'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'simplecov'
@@ -83,10 +83,10 @@ end
 group :application do
   gem 'dalli', '>= 3.2.3'
   gem 'haml-rails', '>= 2.1.0'
-  gem 'inherited_resources', '>= 1.13.1'
+  gem 'inherited_resources', '>= 2.1.0'
   gem 'kaminari'
 
-  gem 'rails-i18n', '>= 7.0.6'
+  gem 'rails-i18n', '>= 7.0.7'
   gem 'rollbar'
   # gem 'simple_form'
 
