@@ -28,7 +28,7 @@ gem 'mysql2', '>= 0.3.18'
 gem 'puma', '~> 5.6.4'
 
 
-gem 'rails', '~> 6.1', '>= 6.1.7'
+gem 'rails', '~> 7.1', '>= 7.1.5.2'
 
 group :assets do
   gem 'bulma-rails'
